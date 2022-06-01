@@ -1,7 +1,11 @@
 # depslib dependency file v1.0
-1653972500 source:c:\users\usuario\documents\utn\2022\1er cuatrimestre\programación\archivos c\prueba proyecto\main.c
+1654104370 source:c:\users\usuario\documents\utn\2022\1er cuatrimestre\programación\archivos c\prueba proyecto\main.c
 	<stdio.h>
+	<conio.h>
 	<stdlib.h>
 	<string.h>
 	<time.h>
+	<dos.h>
+	<windows.h>
+	<unistd.h>
 

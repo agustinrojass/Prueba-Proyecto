@@ -1,11 +1,34 @@
 #include <stdio.h>
+#include <conio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-//VERSION 1.1
+#include <dos.h>
+#include <windows.h>
+#include <unistd.h>
 
+
+//VERSION 1.2
 
 //CREAR APLICACION DE UTN WALLET
+
+
+//FALTA PARTE ADMIN
+
+
+//SE PUEDE AGREGAR CONFIRMACIONES, DETALLES, ERRORES, ETC EN PAGOS/COMPRAS/DEPOSITOS
+
+//AGREGAR "TOKEN" PARA LA COMPRA/VENTA
+
+
+//AGREGAR TIMEOUTS
+
+
+//AGREGAR COLORES
+
+
+//AGREGAR ARCHIVO DE TRANSACCIONES
+
 
 
 typedef struct
@@ -45,7 +68,8 @@ void pantallaInicio();
 void alumnos();                                     //BOTON 1
 void pantallaAlumnos();
 int iniciarSesionAlumno();                          //BOTON 3
-void crearCuentaAlumno();                           //BOTON 4
+void iniciando();
+int crearCuentaAlumno();                            //BOTON 4
 
 //VETANASALUMNOS
 int ventanasAlumnos(stUsuario sesion,int boton);
@@ -59,18 +83,18 @@ int cuota(stUsuario sesion,float *pesos);           //BOTON 8
 int fotocopiadora(stUsuario sesion,float *pesos);   //BOTON 9
 
 //ADMINSITRADORES
-int administradores();                             //BOTON 2
+int administradores();                              //BOTON 2
 void pantallaAdministradores();
+
+//COLORES
+int color(int num);
 
 int main()
 {
     inicio();
+    color(15);
     return 0;
 }
-
-
-
-
 
 //INICIO
 void inicio()
@@ -105,33 +129,626 @@ void inicio()
 }
 void pantallaInicio()
 {
-    printf(" ___________________________________________________ ____________ ___________________ ___________ \n");
-    printf("| UTN WALLET                                        | ALUMNO (1) | ADMINISTRADOR (2) | SALIR (0) |\n");
-    printf("|___________________________________________________|____________|___________________|___________|\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|  ###   ### ######### ###   ###    ###   ### ######### ###       ###       ######### #########  |\n");
-    printf("|  ###   ### ######### ####  ###    ###   ### ######### ###       ###       ######### #########  |\n");
-    printf("|  ###   ###    ###    ####  ###    ###   ### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ##### ###    ###   ### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ##### ###    ###   ### ######### ###       ###       #########    ###     |\n");
-    printf("|  ###   ###    ###    ### #####    ### # ### ######### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ### #####    ######### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  #########    ###    ###  ####    ######### ###   ### ######### ######### #########    ###     |\n");
-    printf("|  #########    ###    ###  ####    #### #### ###   ### ######### ######### #########    ###     |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|________________________________________________________________________________________________|\n");
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                               ");
+        color(63);
+        printf(" ALUMNO (1) ");
+        color(159);
+        printf(" ");
+        color(79);
+        printf(" SALIR (0) ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                          ");
+        color(63);
+        printf("            ");
+        color(159);
+        printf(" ");
+        color(79);
+        printf("           ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 4
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 5
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 7
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 8
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 10
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 11
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf(" ");
+        color(63);
+        printf(" ADMINISTRADOR (2) ");
+        color(144);
+        printf("     AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" 31/05/22 ");
+        color(0);
+        printf(" \n");
+    }
 }
 
 //ALUMNOS
@@ -153,12 +770,13 @@ void alumnos()
             {
                 boton=iniciarSesionAlumno();
                 system("cls");
+
                 printf("\n\nboton: %i",boton);
             }
             break;
             case 4:
             {
-                crearCuentaAlumno();
+                boton=crearCuentaAlumno();
                 system("cls");
             }
             break;
@@ -168,46 +786,738 @@ void alumnos()
 }
 void pantallaAlumnos()
 {
-    printf(" ___________________________________________ ____________________ __________________ ____________ \n");
-    printf("| UTN WALLET                                | INICIAR SESION (3) | CREAR CUENTA (4) | VOLVER (0) |\n");
-    printf("|___________________________________________|____________________|__________________|____________|\n");
-    printf("| ALUMNO                                                                                         |\n");
-    printf("|________________________________________________________________________________________________|\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|  ###   ### ######### ###   ###    ###   ### ######### ###       ###       ######### #########  |\n");
-    printf("|  ###   ### ######### ####  ###    ###   ### ######### ###       ###       ######### #########  |\n");
-    printf("|  ###   ###    ###    ####  ###    ###   ### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ##### ###    ###   ### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ##### ###    ###   ### ######### ###       ###       #########    ###     |\n");
-    printf("|  ###   ###    ###    ### #####    ### # ### ######### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ### #####    ######### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  #########    ###    ###  ####    ######### ###   ### ######### ######### #########    ###     |\n");
-    printf("|  #########    ###    ###  ####    #### #### ###   ### ######### ######### #########    ###     |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|________________________________________________________________________________________________|\n");
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                  ");
+        color(63);
+        printf(" INICIAR SESION (3) ");
+        color(159);
+        printf(" ");
+        color(63);
+        printf(" CREAR CUENTAR (4) ");
+        color(159);
+        printf(" ");
+        color(79);
+        printf(" VOLVER (0) ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                             ");
+        color(63);
+        printf("                    ");
+        color(159);
+        printf(" ");
+        color(63);
+        printf("                   ");
+        color(159);
+        printf(" ");
+        color(79);
+        printf("            ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO                                                                                           ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 7
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 8
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 10
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 11
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" 31/05/22 ");
+        color(0);
+        printf(" \n");
+    }
 }
 int iniciarSesionAlumno()
 {
     int flag=0,boton;
     stUsuario sesion,cuenta;
-    do
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: INICIAR SESION                                                                           ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE DE USUARIO: ");
+        color(15);
+    }
+    fflush(stdin);
+    gets(sesion.usuario);
+    FILE *archivo=fopen("Usuarios","rb");
+    if(archivo!=NULL)
     {
-        printf(" _________________________________________________________________________________ \n");
-        printf("| UTN WALLET                                                                      |\n");
-        printf("|_________________________________________________________________________________|\n");
-        printf("|                                                                                 |\n");
-        printf("|_________________________________________                                        |\n");
-        printf("| NOMBRE DE USUARIO: ");
+        while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
+        {
+            if(strcmp(sesion.usuario,cuenta.usuario)==0)
+            {
+                flag=1;
+            }
+        }
+        fclose(archivo);
+    }
+    system("cls");
+    while(flag!=1)
+    {
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                                                                       ");
+            color(0);
+            printf(" \n");
+        }
+        {   //CABECERA 2
+            color(159);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO: INICIAR SESION                                                                           ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf(" ");
+            color(79);
+            printf(" USUARIO NO ENCONTRADO ");
+            color(249);
+            printf("                                                                          ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" NOMBRE DE USUARIO: ");
+            color(15);
+        }
         fflush(stdin);
         gets(sesion.usuario);
         FILE *archivo=fopen("Usuarios","rb");
@@ -224,18 +1534,154 @@ int iniciarSesionAlumno()
         }
         system("cls");
     }
-    while(flag!=1);
     flag=0;
-    do
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: INICIAR SESION                                                                           ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE DE USUARIO: %-29s ",sesion.usuario);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" CONTRASENA: ");
+        color(15);
+    }
+    fflush(stdin);
+    gets(sesion.contrasena);
+    archivo=fopen("Usuarios","rb");
+    if(archivo!=NULL)
     {
-        printf(" _________________________________________________________________________________ \n");
-        printf("| UTN WALLET                                                                      |\n");
-        printf("|_________________________________________________________________________________|\n");
-        printf("|                                                                                 |\n");
-        printf("|_________________________________________                                        |\n");
-        printf("| NOMBRE DE USUARIO: %-20s |                                       |\n",sesion.usuario);
-        printf("|_________________________________________|                                       |\n");
-        printf("| CONTRASENA: ");
+        while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
+        {
+            if((strcmp(sesion.usuario,cuenta.usuario)==0)&&(strcmp(sesion.contrasena,cuenta.contrasena)==0))
+            {
+                flag=1;
+            }
+        }
+        fclose(archivo);
+    }
+    system("cls");
+    while(flag!=1)
+    {
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                                                                       ");
+            color(0);
+            printf(" \n");
+        }
+        {   //CABECERA 2
+            color(159);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO: INICIAR SESION                                                                           ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" NOMBRE DE USUARIO: %-29s ",sesion.usuario);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 8
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 9
+            color(249);
+            printf(" ");
+            color(79);
+            printf(" CONTRASENA INCORRECTA ");
+            color(249);
+            printf("                                                                          ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 10
+            color(128);
+            printf(" CONTRASENA: ");
+            color(15);
+        }
         fflush(stdin);
         gets(sesion.contrasena);
         FILE *archivo=fopen("Usuarios","rb");
@@ -252,74 +1698,2030 @@ int iniciarSesionAlumno()
         }
         system("cls");
     }
-    while(flag!=1);
-    printf(" __________________________________________________________________ ______________ \n");
-    printf("| UTN WALLET                                                       | CANCELAR (0) |\n");
-    printf("|__________________________________________________________________|______________|\n");
-    printf("|                                                                                 |\n");
-    printf("|_________________________________________                                        |\n");
-    printf("| NOMBRE DE USUARIO: %-20s |                                                      |\n",sesion.usuario);
-    printf("|_________________________________________|                                       |\n");
-    printf("| CONTRASENA: %-27s |                                       |\n",sesion.contrasena);
-    printf("|_________________________________________|                                       |\n");
-    printf("|                                                                                 |\n");
-    printf("|                                                           ____________________  |\n");
-    printf("|                                                          | INICIAR SESION (1) | |\n");
-    printf("|                                                          |____________________| |\n");
-    printf("|_________________________________________________________________________________|\n");
-    scanf("%i",&boton);
-    FILE *archivo=fopen("Usuarios","rb");
-    if(archivo!=NULL)
+    do
     {
-        while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0))
-        {
-            if(strcmp(sesion.usuario,cuenta.usuario)==0)
-            {
-                boton=ventanasAlumnos(cuenta,boton);
-            }
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                                                         ");
+            color(79);
+            printf(" CANCELAR (0) ");
+            color(0);
+            printf(" \n");
         }
-        fclose (archivo);
+        {   //CABECERA 2
+            color(159);
+            printf("                                                                                    ");
+            color(79);
+            printf("              ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO: INICIAR SESION                                                                           ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" NOMBRE DE USUARIO: %-29s ",sesion.usuario);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 8
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 9
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 10
+            color(128);
+            printf(" CONTRASENA: %-36s ",sesion.contrasena);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 11
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 12
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 13
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 14
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 15
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 16
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 17
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 18
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 19
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 20
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 21
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 22
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 23
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 24
+            color(249);
+            printf("                                                                             ");
+            color(32);
+            printf(" INICIAR SESION (1) ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 25
+            color(249);
+            printf("                                                                             ");
+            color(32);
+            printf("                    ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 26
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 27
+            color(144);
+            printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+            color(128);
+            printf(" 31/05/22 ");
+            color(0);
+            printf(" \n");
+        }
+        scanf("%i",&boton);
+        system("cls");
+    }
+    while(boton!=1 && boton!=0);
+    if(boton==1)
+    {
+        FILE *archivo=fopen("Usuarios","rb");
+        if(archivo!=NULL)
+        {
+            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0))
+            {
+                if(strcmp(sesion.usuario,cuenta.usuario)==0)
+                {
+                    iniciando();
+                    system("cls");
+                    boton=ventanasAlumnos(cuenta,boton);
+                }
+            }
+            fclose (archivo);
+        }
     }
     return boton;
 }
-void crearCuentaAlumno()
+void iniciando()
 {
-    stUsuario datos;
-    stUsuario datosAux;
-    FILE *archivoUsuarios=fopen("Usuarios","ab");
-    if(archivoUsuarios!=NULL)
-    {
-        printf("Ingrese su nombre y apellido: ");
-        fflush(stdin);
-        gets(datos.nombre);
-        printf("Ingrese su numero de documento: ");
-        scanf("%i",&datos.dni);
-        printf("Ingrese su edad: ");
-        scanf("%i",&datos.edad);
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO                                                                                           ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 7
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 8
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 10
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 11
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(79);
+        printf(" INICIANDO SESION ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" 31/05/22 ");
+        color(0);
+        printf(" \n");
+    }
+    sleep(2);
+}
 
-        printf("Ingrese su nombre de usuario: ");
+void pantalla1CrearCuenta()
+{
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: CREAR CUENTA                                                                             ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" INGRESE SU NOMBRE Y APELLIDO: ");
+        color(15);
+    }
+}
+void pantalla2CrearCuenta(int ronda,stUsuario datos)
+{
+    {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                                                                       ");
+            color(0);
+            printf(" \n");
+        }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: CREAR CUENTA                                                                             ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    if(ronda==1)
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    else
+    {   //LINEA 9
+        color(249);
+        printf(" ");
+        color(79);
+        printf(" ESE NUMERO DE DOCUMENTO YA ESTA REGISTRADO ");
+        color(249);
+        printf("                                                     ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" INGRESE SU NUMERO DE DOCUMENTO: ");
+        color(15);
+    }
+}
+void pantalla3CrearCuenta(stUsuario datos)
+{
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: CREAR CUENTA                                                                             ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 12
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 13
+        color(128);
+        printf(" INGRESE SU EDAD: ");
+        color(15);
+    }
+}
+void pantalla4CrearCuenta(int ronda,stUsuario datos)
+{
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: CREAR CUENTA                                                                             ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 12
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 13
+        color(128);
+        printf(" EDAD: %-42i ",datos.edad);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 14
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    if(ronda==1)
+    {   //LINEA 15
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    else
+    {   //LINEA 15
+        color(249);
+        printf(" ");
+        color(79);
+        printf(" ESE NOMBRE DE USUARIO YA ESTA REGISTRADO ");
+        color(249);
+        printf("                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 16
+        color(128);
+        printf(" ESCRIBA UN NOMBRE DE USUARIO: ");
+        color(15);
+    }
+}
+
+
+
+int crearCuentaAlumno()
+{
+    stUsuario datos,datosAux;
+    int boton,ronda=1,repetido=1,flag=0;
+    //NOMBRE
+    pantalla1CrearCuenta();
+    fflush(stdin);
+    gets(datos.nombre);
+    system("cls");
+    //DOCUMENTO
+    while(repetido==1)
+    {
+        pantalla2CrearCuenta(ronda,datos);
+        scanf("%i",&datos.dni);
+        FILE *archivoUsuarios=fopen("Usuarios","rb");
+        if(archivoUsuarios!=NULL)
+        {
+            while((fread(&datosAux,sizeof(stUsuario),1,archivoUsuarios)>0)&&flag==0)
+            {
+                if(datos.dni==datosAux.dni)
+                {
+                    flag=1;
+                }
+            }
+            fclose(archivoUsuarios);
+        }
+        if(flag==0)
+        {
+            repetido=0;
+        }
+        else
+        {
+            flag=0;
+        }
+        ronda++;
+        system("cls");
+    }
+    //EDAD
+    //VER SI SE HACE CON FECHA DE NACIMIENTO
+    pantalla3CrearCuenta(datos);
+    scanf("%i",&datos.edad);
+    system("cls");
+    //USUARIO
+    ronda=1;
+    repetido=1;
+    flag=0;
+    while(repetido==1)
+    {
+        pantalla4CrearCuenta(ronda,datos);
         fflush(stdin);
         gets(datos.usuario);
-
-        //VER SI EL NOMBRE DE USUARIO ESTA DISPONIBLE
-
-        do
+        FILE *archivoUsuarios=fopen("Usuarios","rb");
+        if(archivoUsuarios!=NULL)
         {
-            do
+            while((fread(&datosAux,sizeof(stUsuario),1,archivoUsuarios)>0)&&flag==0)
             {
-                printf("Ingrese una contrasena (8 caracteres minimo): ");
-                fflush(stdin);
-                gets(datos.contrasena);
+                if(strcmp(datos.usuario,datosAux.usuario)==0)
+                {
+                    flag=1;
+                }
             }
-            while(strlen(datos.contrasena)<8);
-            printf("Vuelva a ingresar la misma contrasena: ");
-            fflush(stdin);
-            gets(datosAux.contrasena);
+            fclose(archivoUsuarios);
         }
-        while(strcmp(datos.contrasena,datosAux.contrasena)!=0);
-        fwrite(&datos,sizeof(stUsuario),1,archivoUsuarios);
-        fclose(archivoUsuarios);
+        if(flag==0)
+        {
+            repetido=0;
+        }
+        else
+        {
+            flag=0;
+        }
+        ronda++;
+        system("cls");
     }
+    //CONTRASENA
+    //CAMBIAR
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: CREAR CUENTA                                                                             ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 12
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 13
+        color(128);
+        printf(" EDAD: %-42i ",datos.edad);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 14
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 15
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 16
+        color(128);
+        printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 17
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 18
+        color(249);
+        printf(" ");
+        color(79);
+        printf(" DEBE TENER 8 CARACTERES COMO MINIMO ");
+        color(249);
+        printf("                                                            ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 19
+        color(128);
+        printf(" INGRESE UNA CONTRASENA: ");
+        color(15);
+    }
+    fflush(stdin);
+    gets(datos.contrasena);
+    system("cls");
+    while(strlen(datos.contrasena)<8)
+    {
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                                                                       ");
+            color(0);
+            printf(" \n");
+        }
+        {   //CABECERA 2
+            color(159);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO: CREAR CUENTA                                                                             ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 8
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 9
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 10
+            color(128);
+            printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 11
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 12
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 13
+            color(128);
+            printf(" EDAD: %-42i ",datos.edad);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 14
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 15
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 16
+            color(128);
+            printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 17
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 18
+            color(249);
+            printf(" ");
+            color(79);
+            printf(" LA CONTRASENA NO TIENE 8 CARACTERES ");
+            color(249);
+            printf("                                                            ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 19
+            color(128);
+            printf(" INGRESE UNA CONTRASENA: ");
+            color(15);
+        }
+        fflush(stdin);
+        gets(datos.contrasena);
+        system("cls");
+    }
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: CREAR CUENTA                                                                             ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 12
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 13
+        color(128);
+        printf(" EDAD: %-42i ",datos.edad);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 14
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 15
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 16
+        color(128);
+        printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 17
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 18
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 19
+        color(128);
+        printf(" CONTRASENA: %-36s ",datos.contrasena);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 20
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 22
+        color(128);
+        printf(" VUELVA A INGRESAR LA CONTRASENA: ");
+        color(15);
+    }
+    fflush(stdin);
+    gets(datosAux.contrasena);
+    system("cls");
+    while(strcmp(datos.contrasena,datosAux.contrasena)!=0)
+    {
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                                                                       ");
+            color(0);
+            printf(" \n");
+        }
+        {   //CABECERA 2
+            color(159);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO: CREAR CUENTA                                                                             ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 8
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 9
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 10
+            color(128);
+            printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 11
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 12
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 13
+            color(128);
+            printf(" EDAD: %-42i ",datos.edad);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 14
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 15
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 16
+            color(128);
+            printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 17
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 18
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 19
+            color(128);
+            printf(" CONTRASENA: %-36s ",datos.contrasena);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 20
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 21
+            color(249);
+            printf(" ");
+            color(79);
+            printf(" LAS CONTRASENAS NO COINCIDEN ");
+            color(249);
+            printf("                                                           ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 22
+            color(128);
+            printf(" VUELVA A INGRESAR LA CONTRASENA: ");
+            color(15);
+        }
+        fflush(stdin);
+        gets(datosAux.contrasena);
+        system("cls");
+    }
+    do
+    {
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                                                         ");
+            color(79);
+            printf(" CANCELAR (0) ");
+            color(0);
+            printf(" \n");
+        }
+        {   //CABECERA 2
+            color(159);
+            printf("                                                                                    ");
+            color(79);
+            printf("              ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO: CREAR CUENTA                                                                             ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 8
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 9
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 10
+            color(128);
+            printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 11
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 12
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 13
+            color(128);
+            printf(" EDAD: %-42i ",datos.edad);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 14
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 15
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 16
+            color(128);
+            printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 17
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 18
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 19
+            color(128);
+            printf(" CONTRASENA: %-36s ",datos.contrasena);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 20
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 21
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 22
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 23
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 24
+            color(249);
+            printf("                                                                               ");
+            color(32);
+            printf(" CREAR CUENTA (1) ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 25
+            color(249);
+            printf("                                                                               ");
+            color(32);
+            printf("                  ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 26
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 27
+            color(144);
+            printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+            color(128);
+            printf(" 31/05/22 ");
+            color(0);
+            printf(" \n");
+        }
+        scanf("%i",&boton);
+        system("cls");
+    }
+    while(boton!=1 && boton!=0);
+    if(boton==1)
+    {
+        FILE *archivoUsuarios=fopen("Usuarios","ab");
+        if(archivoUsuarios!=NULL)
+        {
+            fwrite(&datos,sizeof(stUsuario),1,archivoUsuarios);
+            fclose(archivoUsuarios);
+        }
+        boton=0;
+    }
+    return boton;
 }
 
 //VENTANASALUMNOS
@@ -402,33 +3804,204 @@ int estadoDeCuenta(stUsuario sesion,float pesos)        //BOTON 1
     }
     do
     {
-        printf(" ______________________________________________________ _____________________ ___________________ \n");
-        printf("| UTN WALLET                                           | DATOS PERSONALES (2)| CERRAR SESION (0) |\n");
-        printf("|______________________________________________________|_____________________|___________________|\n");
-        printf("| ALUMNO                                                                                         |\n");
-        printf("|________________________________________________________________________________________________|\n");
-        printf("| ESTADO DE LA CUENTA                                                                            |\n");
-        printf("|________________________________________ _______________________________________________________|\n");
-        printf("| USUARIO: %-29s |                                                       |\n",sesion.usuario);
-        printf("|________________________________________|                                                       |\n");
-        printf("| SALDO: $ %-29.2f |                                                       |\n",suma);
-        printf("|________________________________________|                                                       |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                   ______________  ___________  |\n");
-        printf("|                                                                  | DEPOSITAR (3)|| PAGAR (4) | |\n");
-        printf("|                                                                  |______________||___________| |\n");
-        printf("|________________________________________________________________________________________________|\n");
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                             ");
+            color(128);
+            printf(" DATOS PERSONALES (2) ");
+            color(159);
+            printf(" ");
+            color(79);
+            printf(" CERRAR SESION (0) ");
+            color(0);
+            printf(" \n");
+        }
+        {   //CABECERA 2
+            color(159);
+            printf("                                                        ");
+            color(128);
+            printf("                      ");
+            color(159);
+            printf(" ");
+            color(79);
+            printf("                   ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO                                                                                           ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" ESTADO DE LA CUENTA                                                                              ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 8
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 9
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 10
+            color(128);
+            printf(" USUARIO: %-39s ",sesion.usuario);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 11
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 12
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 13
+            color(128);
+            printf(" SALDO: $ %-39.2f ",sesion.saldo);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 14
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 15
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 16
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 17
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 18
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 19
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 20
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 21
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 22
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 23
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 24
+            color(249);
+            printf("                                                                      ");
+            color(159);
+            printf(" DEPOSITAR (3) ");
+            color(249);
+            printf(" ");
+            color(159);
+            printf(" PAGAR (4) ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 25
+            color(249);
+            printf("                                                                      ");
+            color(159);
+            printf("               ");
+            color(249);
+            printf(" ");
+            color(159);
+            printf("           ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 26
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 27
+            color(144);
+            printf("                      AGUSTIN ROJAS - FRANCISCO PEREZ UGALDE - GONZALO MARSALA - ZEUS JESUA TESTA ");
+            color(0);
+            printf(" \n");
+        }
         scanf("%i",&boton);
         system("cls");
     }
@@ -453,36 +4026,204 @@ int estadoDeCuenta(stUsuario sesion,float pesos)        //BOTON 1
 }
 int datosPersonales(stUsuario sesion)                   //BOTON 2
 {
+    color(15);
     int boton;
     do
     {
-        printf(" __________________________________________________ _________________________ ___________________ \n");
-        printf("| UTN WALLET                                       | ESTADO DE LA CUENTA (1) | CERRAR SESION (0) |\n");
-        printf("|__________________________________________________|_________________________|___________________|\n");
-        printf("| ALUMNO                                                                                         |\n");
-        printf("|________________________________________________________________________________________________|\n");
-        printf("| DATOS PERSONALES                                                                               |\n");
-        printf("|________________________________________ _______________________________________________________|\n");
-        printf("| NOMBRE: %-30s |                                                       |\n",sesion.nombre);
-        printf("|________________________________________|                                                       |\n");
-        printf("| DOCUMENTO: %-27i |                                                       |\n",sesion.dni);
-        printf("|________________________________________|                                                       |\n");
-        printf("| EDAD: %-32i |                                                       |\n",sesion.edad);
-        printf("|________________________________________|                                                       |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                 _____________________________  |\n");
-        printf("|                                                                | EDITAR DATOS PERSONALES (5) | |\n");
-        printf("|                                                                |_____________________________| |\n");
-        printf("|________________________________________________________________________________________________|\n");
+        {   //CABECERA 1
+            color(159);
+            printf(" UTN WALLET                                          ");
+            color(128);
+            printf(" ESTADO DE LA CUENTA (1) ");
+            color(159);
+            printf(" ");
+            color(79);
+            printf(" CERRAR SESION (0) ");
+            color(0);
+            printf(" \n");
+        }
+        {   //CABECERA 2
+            color(159);
+            printf("                                                     ");
+            color(128);
+            printf("                         ");
+            color(159);
+            printf(" ");
+            color(79);
+            printf("                   ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 3
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 4
+            color(128);
+            printf(" ALUMNO                                                                                           ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 5
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 6
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 7
+            color(128);
+            printf(" DATOS PERSONALES                                                                                 ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 8
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 9
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 10
+            color(128);
+            printf(" NOMBRE: %-40s ",sesion.nombre);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 11
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 12
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 13
+            color(128);
+            printf(" DOCUMENTO: %-37i ",sesion.dni);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 14
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 15
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 16
+            color(128);
+            printf(" EDAD: %-42i ",sesion.edad);
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //SUBCABECERA 17
+            color(128);
+            printf("                                                  ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 18
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 19
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 20
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 21
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 22
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 23
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 24
+            color(249);
+            printf("                                                                    ");
+            color(159);
+            printf(" EDITAR DATOS PERSONALES (5) ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 25
+            color(249);
+            printf("                                                                    ");
+            color(159);
+            printf("                             ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 26
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
+        {   //LINEA 27
+            color(144);
+            printf("                      AGUSTIN ROJAS - FRANCISCO PEREZ UGALDE - GONZALO MARSALA - ZEUS JESUA TESTA ");
+            color(0);
+            printf(" \n");
+        }
         scanf("%i",&boton);
         system("cls");
     }
@@ -758,7 +4499,7 @@ int administradores()
     {
         do
         {
-            pantallaAlumnos();
+            pantallaAdministradores();
             scanf("%i",&boton);
             system("cls");
         }
@@ -788,31 +4529,635 @@ int administradores()
 }
 void pantallaAdministradores()
 {
-    printf(" ___________________________________________ ____________________ __________________ ____________ \n");
-    printf("| UTN WALLET                                | INICIAR SESION (5) | CREAR CUENTA (6) | VOLVER (0) |\n");
-    printf("|___________________________________________|____________________|__________________|____________|\n");
-    printf("| ADMINISTRADOR                                                                                  |\n");
-    printf("|________________________________________________________________________________________________|\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|  ###   ### ######### ###   ###    ###   ### ######### ###       ###       ######### #########  |\n");
-    printf("|  ###   ### ######### ####  ###    ###   ### ######### ###       ###       ######### #########  |\n");
-    printf("|  ###   ###    ###    ####  ###    ###   ### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ##### ###    ###   ### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ##### ###    ###   ### ######### ###       ###       #########    ###     |\n");
-    printf("|  ###   ###    ###    ### #####    ### # ### ######### ###       ###       ###          ###     |\n");
-    printf("|  ###   ###    ###    ### #####    ######### ###   ### ###       ###       ###          ###     |\n");
-    printf("|  #########    ###    ###  ####    ######### ###   ### ######### ######### #########    ###     |\n");
-    printf("|  #########    ###    ###  ####    #### #### ###   ### ######### ######### #########    ###     |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|                                                                                                |\n");
-    printf("|________________________________________________________________________________________________|\n");
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                  ");
+        color(63);
+        printf(" INICIAR SESION (3) ");
+        color(159);
+        printf(" ");
+        color(63);
+        printf(" CREAR CUENTAR (4) ");
+        color(159);
+        printf(" ");
+        color(79);
+        printf(" VOLVER (0) ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                             ");
+        color(63);
+        printf("                    ");
+        color(159);
+        printf(" ");
+        color(63);
+        printf("                   ");
+        color(159);
+        printf(" ");
+        color(79);
+        printf("            ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ADMINISTRADOR                                                                                    ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 7
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 8
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 10
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 11
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" 31/05/22 ");
+        color(0);
+        printf(" \n");
+    }
+}
+
+//COLOR
+int color(int num)
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),num);
+	return 0;
 }
