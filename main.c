@@ -1,34 +1,30 @@
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include <dos.h>
 #include <windows.h>
 #include <unistd.h>
-
+#include <time.h>
 
 //VERSION 1.2
 
 //CREAR APLICACION DE UTN WALLET
 
-
 //FALTA PARTE ADMIN
+
+
+//EN CREAR CUENTA: AGREGAR QUE SE PUEDA CANCELAR EN CUALQUIER MOMENTO
+
+
+//EN INICIAR SESION: AGREGAR QUE SE PUEDA CANCELAR EN CUALQUIER MOMENTO
 
 
 //SE PUEDE AGREGAR CONFIRMACIONES, DETALLES, ERRORES, ETC EN PAGOS/COMPRAS/DEPOSITOS
 
 //AGREGAR "TOKEN" PARA LA COMPRA/VENTA
 
-
 //AGREGAR TIMEOUTS
 
-
-//AGREGAR COLORES
-
-
 //AGREGAR ARCHIVO DE TRANSACCIONES
-
 
 
 typedef struct
@@ -40,37 +36,45 @@ typedef struct
     char contrasena[20];
     float saldo;
 } stUsuario;
-
 typedef struct
 {
     char nombre[20];
     char usuario[20];
     char contrasena[20];
 } stAdmin;
-
-void edad()
+typedef struct
 {
+    int dia;
+    int mes;
+    int ano;
+} stFecha;
 
+void edad() //HACER
+{
     printf("INGRESE SU FECHA DE NACIMIENTO:\n");
     printf("DIA");
     printf("MES");
     printf("ANO");
-
-
 }
 
 
 //INICIO
 void inicio();
 void pantallaInicio();
-
 //ALUMNOS
 void alumnos();                                     //BOTON 1
 void pantallaAlumnos();
 int iniciarSesionAlumno();                          //BOTON 3
+void IniciarSesionPantalla4(stUsuario sesion);
 void iniciando();
 int crearCuentaAlumno();                            //BOTON 4
-
+void pantalla1CrearCuenta();
+void pantalla2CrearCuenta(int ronda,stUsuario datos);
+void pantalla3CrearCuenta(stUsuario datos);
+void pantalla4CrearCuenta(int ronda,stUsuario datos);
+void pantalla5CrearCuenta(int ronda,stUsuario datos);
+void pantalla6CrearCuenta(int ronda,stUsuario datos);
+void pantalla7CrearCuenta(int boton,stUsuario datos);
 //VETANASALUMNOS
 int ventanasAlumnos(stUsuario sesion,int boton);
 int estadoDeCuenta(stUsuario sesion,float pesos);   //BOTON 1
@@ -81,21 +85,21 @@ int editarDatos(stUsuario sesion);                  //BOTON 5
 int buffet(stUsuario sesion,float *pesos);          //BOTON 7
 int cuota(stUsuario sesion,float *pesos);           //BOTON 8
 int fotocopiadora(stUsuario sesion,float *pesos);   //BOTON 9
-
 //ADMINSITRADORES
 int administradores();                              //BOTON 2
 void pantallaAdministradores();
-
 //COLORES
 int color(int num);
+//FECHA
+stFecha fechaActual();
 
 int main()
 {
+    //fechaActual();
     inicio();
     color(15);
     return 0;
 }
-
 //INICIO
 void inicio()
 {
@@ -129,6 +133,7 @@ void inicio()
 }
 void pantallaInicio()
 {
+    stFecha fecha=fechaActual();
     {   //CABECERA 1
         color(159);
         printf(" UTN WALLET                                                               ");
@@ -745,12 +750,11 @@ void pantallaInicio()
         color(144);
         printf("     AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
         color(128);
-        printf(" 31/05/22 ");
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
         color(0);
         printf(" \n");
     }
 }
-
 //ALUMNOS
 void alumnos()
 {
@@ -786,6 +790,7 @@ void alumnos()
 }
 void pantallaAlumnos()
 {
+    stFecha fecha=fechaActual();
     {   //CABECERA 1
         color(159);
         printf(" UTN WALLET                                  ");
@@ -1406,7 +1411,7 @@ void pantallaAlumnos()
         color(144);
         printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
         color(128);
-        printf(" 31/05/22 ");
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
         color(0);
         printf(" \n");
     }
@@ -1458,7 +1463,7 @@ int iniciarSesionAlumno()
     }
     fflush(stdin);
     gets(sesion.usuario);
-    FILE *archivo=fopen("Usuarios","rb");
+    FILE *archivo=fopen("Registro","rb");
     if(archivo!=NULL)
     {
         while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
@@ -1600,7 +1605,7 @@ int iniciarSesionAlumno()
     }
     fflush(stdin);
     gets(sesion.contrasena);
-    archivo=fopen("Usuarios","rb");
+    archivo=fopen("Registro","rb");
     if(archivo!=NULL)
     {
         while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
@@ -1684,7 +1689,7 @@ int iniciarSesionAlumno()
         }
         fflush(stdin);
         gets(sesion.contrasena);
-        FILE *archivo=fopen("Usuarios","rb");
+        FILE *archivo=fopen("Registro","rb");
         if(archivo!=NULL)
         {
             while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
@@ -1700,7 +1705,34 @@ int iniciarSesionAlumno()
     }
     do
     {
-        {   //CABECERA 1
+        IniciarSesionPantalla4(sesion);
+        scanf("%i",&boton);
+        system("cls");
+    }
+    while(boton!=1 && boton!=0);
+    if(boton==1)
+    {
+        FILE *archivo=fopen("Registro","rb");
+        if(archivo!=NULL)
+        {
+            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0))
+            {
+                if(strcmp(sesion.usuario,cuenta.usuario)==0)
+                {
+                    iniciando();
+                    system("cls");
+                    boton=ventanasAlumnos(cuenta,boton);
+                }
+            }
+            fclose (archivo);
+        }
+    }
+    return boton;
+}
+void IniciarSesionPantalla4(stUsuario sesion)
+{
+    stFecha fecha=fechaActual();
+    {   //CABECERA 1
             color(159);
             printf(" UTN WALLET                                                                         ");
             color(79);
@@ -1880,33 +1912,12 @@ int iniciarSesionAlumno()
             color(144);
             printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
             color(128);
-            printf(" 31/05/22 ");
+            printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
             color(0);
             printf(" \n");
         }
-        scanf("%i",&boton);
-        system("cls");
-    }
-    while(boton!=1 && boton!=0);
-    if(boton==1)
-    {
-        FILE *archivo=fopen("Usuarios","rb");
-        if(archivo!=NULL)
-        {
-            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0))
-            {
-                if(strcmp(sesion.usuario,cuenta.usuario)==0)
-                {
-                    iniciando();
-                    system("cls");
-                    boton=ventanasAlumnos(cuenta,boton);
-                }
-            }
-            fclose (archivo);
-        }
-    }
-    return boton;
 }
+
 void iniciando()
 {
     {   //CABECERA 1
@@ -2507,8 +2518,121 @@ void iniciando()
     }
     sleep(2);
 }
-
-void pantalla1CrearCuenta()
+int crearCuentaAlumno()
+{
+    stUsuario datos,datosAux;
+    int boton=2,ronda=1,repetido=1,flag=0;
+    //NOMBRE
+    pantalla1CrearCuenta();
+    fflush(stdin);
+    gets(datos.nombre);
+    system("cls");
+    //DOCUMENTO
+    while(repetido==1)
+    {
+        pantalla2CrearCuenta(ronda,datos);
+        scanf("%i",&datos.dni);
+        FILE *archivoUsuarios=fopen("Registro","rb");
+        if(archivoUsuarios!=NULL)
+        {
+            while((fread(&datosAux,sizeof(stUsuario),1,archivoUsuarios)>0)&&flag==0)
+            {
+                if(datos.dni==datosAux.dni)
+                {
+                    flag=1;
+                }
+            }
+            fclose(archivoUsuarios);
+        }
+        if(flag==0)
+        {
+            repetido=0;
+        }
+        else
+        {
+            flag=0;
+        }
+        ronda++;
+        system("cls");
+    }
+    //EDAD
+    //VER SI SE HACE CON FECHA DE NACIMIENTO
+    pantalla3CrearCuenta(datos);
+    scanf("%i",&datos.edad);
+    system("cls");
+    //USUARIO
+    ronda=1;
+    repetido=1;
+    flag=0;
+    while(repetido==1)
+    {
+        pantalla4CrearCuenta(ronda,datos);
+        fflush(stdin);
+        gets(datos.usuario);
+        FILE *archivoUsuarios=fopen("Registro","rb");
+        if(archivoUsuarios!=NULL)
+        {
+            while((fread(&datosAux,sizeof(stUsuario),1,archivoUsuarios)>0)&&flag==0)
+            {
+                if(strcmp(datos.usuario,datosAux.usuario)==0)
+                {
+                    flag=1;
+                }
+            }
+            fclose(archivoUsuarios);
+        }
+        if(flag==0)
+        {
+            repetido=0;
+        }
+        else
+        {
+            flag=0;
+        }
+        ronda++;
+        system("cls");
+    }
+    //CONTRASENA
+    ronda=1;
+    while(strlen(datos.contrasena)<8)
+    {
+        pantalla5CrearCuenta(ronda,datos);
+        fflush(stdin);
+        gets(datos.contrasena);
+        ronda++;
+        system("cls");
+    }
+    //REPETIR CONTRASENA
+    ronda=1;
+    do
+    {
+        pantalla6CrearCuenta(ronda,datos);
+        fflush(stdin);
+        gets(datosAux.contrasena);
+        ronda++;
+        system("cls");
+    }
+    while(strcmp(datos.contrasena,datosAux.contrasena)!=0);
+    //CONFIRMACION
+    while(boton!=1 && boton!=0)
+    {
+        pantalla7CrearCuenta(boton,datos);
+        scanf("%i",&boton);
+        system("cls");
+    }
+    if(boton==1)
+    {
+        FILE *archivoUsuarios=fopen("Registro","ab");
+        if(archivoUsuarios!=NULL)
+        {
+            fwrite(&datos,sizeof(stUsuario),1,archivoUsuarios);
+            fclose(archivoUsuarios);
+        }
+        boton=0;
+    }
+    return boton;
+}
+void pantalla1CrearCuenta()                             //PANTALLA QUE PIDE NOMBRE
 {
     {   //CABECERA 1
         color(159);
@@ -2552,7 +2676,7 @@ void pantalla1CrearCuenta()
         color(15);
     }
 }
-void pantalla2CrearCuenta(int ronda,stUsuario datos)
+void pantalla2CrearCuenta(int ronda,stUsuario datos)    //PANTALLA QUE PIDE DOCUMENTO
 {
     {   //CABECERA 1
             color(159);
@@ -2630,7 +2754,7 @@ void pantalla2CrearCuenta(int ronda,stUsuario datos)
         color(15);
     }
 }
-void pantalla3CrearCuenta(stUsuario datos)
+void pantalla3CrearCuenta(stUsuario datos)              //PANTALLA QUE PIDE FECHA DE NACIMIENTO (MODIFICAR)
 {
     {   //CABECERA 1
         color(159);
@@ -2718,7 +2842,7 @@ void pantalla3CrearCuenta(stUsuario datos)
         color(15);
     }
 }
-void pantalla4CrearCuenta(int ronda,stUsuario datos)
+void pantalla4CrearCuenta(int ronda,stUsuario datos)    //PANTALLA QUE PIDE NOMBRE DE USUARIO
 {
     {   //CABECERA 1
         color(159);
@@ -2840,85 +2964,8 @@ void pantalla4CrearCuenta(int ronda,stUsuario datos)
         color(15);
     }
 }
-
-
-
-int crearCuentaAlumno()
+void pantalla5CrearCuenta(int ronda,stUsuario datos)    //PANTALLA QUE PIDE CONTRASENA
 {
-    stUsuario datos,datosAux;
-    int boton,ronda=1,repetido=1,flag=0;
-    //NOMBRE
-    pantalla1CrearCuenta();
-    fflush(stdin);
-    gets(datos.nombre);
-    system("cls");
-    //DOCUMENTO
-    while(repetido==1)
-    {
-        pantalla2CrearCuenta(ronda,datos);
-        scanf("%i",&datos.dni);
-        FILE *archivoUsuarios=fopen("Usuarios","rb");
-        if(archivoUsuarios!=NULL)
-        {
-            while((fread(&datosAux,sizeof(stUsuario),1,archivoUsuarios)>0)&&flag==0)
-            {
-                if(datos.dni==datosAux.dni)
-                {
-                    flag=1;
-                }
-            }
-            fclose(archivoUsuarios);
-        }
-        if(flag==0)
-        {
-            repetido=0;
-        }
-        else
-        {
-            flag=0;
-        }
-        ronda++;
-        system("cls");
-    }
-    //EDAD
-    //VER SI SE HACE CON FECHA DE NACIMIENTO
-    pantalla3CrearCuenta(datos);
-    scanf("%i",&datos.edad);
-    system("cls");
-    //USUARIO
-    ronda=1;
-    repetido=1;
-    flag=0;
-    while(repetido==1)
-    {
-        pantalla4CrearCuenta(ronda,datos);
-        fflush(stdin);
-        gets(datos.usuario);
-        FILE *archivoUsuarios=fopen("Usuarios","rb");
-        if(archivoUsuarios!=NULL)
-        {
-            while((fread(&datosAux,sizeof(stUsuario),1,archivoUsuarios)>0)&&flag==0)
-            {
-                if(strcmp(datos.usuario,datosAux.usuario)==0)
-                {
-                    flag=1;
-                }
-            }
-            fclose(archivoUsuarios);
-        }
-        if(flag==0)
-        {
-            repetido=0;
-        }
-        else
-        {
-            flag=0;
-        }
-        ronda++;
-        system("cls");
-    }
-    //CONTRASENA
-    //CAMBIAR
     {   //CABECERA 1
         color(159);
         printf(" UTN WALLET                                                                                       ");
@@ -3037,6 +3084,7 @@ int crearCuentaAlumno()
         color(0);
         printf(" \n");
     }
+    if(ronda==1)
     {   //LINEA 18
         color(249);
         printf(" ");
@@ -3047,153 +3095,25 @@ int crearCuentaAlumno()
         color(0);
         printf(" \n");
     }
+    else
+    {   //LINEA 18
+        color(249);
+        printf(" ");
+        color(79);
+        printf(" LA CONTRASENA NO TIENE 8 CARACTERES ");
+        color(249);
+        printf("                                                            ");
+        color(0);
+        printf(" \n");
+    }
     {   //SUBCABECERA 19
         color(128);
         printf(" INGRESE UNA CONTRASENA: ");
         color(15);
     }
-    fflush(stdin);
-    gets(datos.contrasena);
-    system("cls");
-    while(strlen(datos.contrasena)<8)
-    {
-        {   //CABECERA 1
-            color(159);
-            printf(" UTN WALLET                                                                                       ");
-            color(0);
-            printf(" \n");
-        }
-        {   //CABECERA 2
-            color(159);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 3
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 4
-            color(128);
-            printf(" ALUMNO: CREAR CUENTA                                                                             ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 5
-            color(128);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 6
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 7
-            color(128);
-            printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 8
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 9
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 10
-            color(128);
-            printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 11
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 12
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 13
-            color(128);
-            printf(" EDAD: %-42i ",datos.edad);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 14
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 15
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 16
-            color(128);
-            printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 17
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 18
-            color(249);
-            printf(" ");
-            color(79);
-            printf(" LA CONTRASENA NO TIENE 8 CARACTERES ");
-            color(249);
-            printf("                                                            ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 19
-            color(128);
-            printf(" INGRESE UNA CONTRASENA: ");
-            color(15);
-        }
-        fflush(stdin);
-        gets(datos.contrasena);
-        system("cls");
-    }
+}
+void pantalla6CrearCuenta(int ronda,stUsuario datos)    //PANTALLA QUE PIDE REPETIR CONTRASENA
+{
     {   //CABECERA 1
         color(159);
         printf(" UTN WALLET                                                                                       ");
@@ -3334,9 +3254,21 @@ int crearCuentaAlumno()
         color(0);
         printf(" \n");
     }
+    if(ronda==1)
     {   //LINEA 21
         color(249);
         printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    else
+    {   //LINEA 21
+        color(249);
+        printf(" ");
+        color(79);
+        printf(" LAS CONTRASENAS NO COINCIDEN ");
+        color(249);
+        printf("                                                           ");
         color(0);
         printf(" \n");
     }
@@ -3345,383 +3277,205 @@ int crearCuentaAlumno()
         printf(" VUELVA A INGRESAR LA CONTRASENA: ");
         color(15);
     }
-    fflush(stdin);
-    gets(datosAux.contrasena);
-    system("cls");
-    while(strcmp(datos.contrasena,datosAux.contrasena)!=0)
-    {
-        {   //CABECERA 1
-            color(159);
-            printf(" UTN WALLET                                                                                       ");
-            color(0);
-            printf(" \n");
-        }
-        {   //CABECERA 2
-            color(159);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 3
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 4
-            color(128);
-            printf(" ALUMNO: CREAR CUENTA                                                                             ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 5
-            color(128);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 6
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 7
-            color(128);
-            printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 8
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 9
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 10
-            color(128);
-            printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 11
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 12
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 13
-            color(128);
-            printf(" EDAD: %-42i ",datos.edad);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 14
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 15
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 16
-            color(128);
-            printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 17
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 18
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 19
-            color(128);
-            printf(" CONTRASENA: %-36s ",datos.contrasena);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 20
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 21
-            color(249);
-            printf(" ");
-            color(79);
-            printf(" LAS CONTRASENAS NO COINCIDEN ");
-            color(249);
-            printf("                                                           ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 22
-            color(128);
-            printf(" VUELVA A INGRESAR LA CONTRASENA: ");
-            color(15);
-        }
-        fflush(stdin);
-        gets(datosAux.contrasena);
-        system("cls");
+}
+void pantalla7CrearCuenta(int boton,stUsuario datos)    //PANTALLA QUE PIDE CONFIRMAR/CANCELAR
+{
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                         ");
+        color(79);
+        printf(" CANCELAR (0) ");
+        color(0);
+        printf(" \n");
     }
-    do
-    {
-        {   //CABECERA 1
-            color(159);
-            printf(" UTN WALLET                                                                         ");
-            color(79);
-            printf(" CANCELAR (0) ");
-            color(0);
-            printf(" \n");
-        }
-        {   //CABECERA 2
-            color(159);
-            printf("                                                                                    ");
-            color(79);
-            printf("              ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 3
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 4
-            color(128);
-            printf(" ALUMNO: CREAR CUENTA                                                                             ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 5
-            color(128);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 6
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 7
-            color(128);
-            printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 8
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 9
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 10
-            color(128);
-            printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 11
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 12
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 13
-            color(128);
-            printf(" EDAD: %-42i ",datos.edad);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 14
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 15
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 16
-            color(128);
-            printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 17
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 18
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 19
-            color(128);
-            printf(" CONTRASENA: %-36s ",datos.contrasena);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 20
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 21
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 22
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 23
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 24
-            color(249);
-            printf("                                                                               ");
-            color(32);
-            printf(" CREAR CUENTA (1) ");
-            color(249);
-            printf(" ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 25
-            color(249);
-            printf("                                                                               ");
-            color(32);
-            printf("                  ");
-            color(249);
-            printf(" ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 26
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 27
-            color(144);
-            printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
-            color(128);
-            printf(" 31/05/22 ");
-            color(0);
-            printf(" \n");
-        }
-        scanf("%i",&boton);
-        system("cls");
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                    ");
+        color(79);
+        printf("              ");
+        color(0);
+        printf(" \n");
     }
-    while(boton!=1 && boton!=0);
-    if(boton==1)
-    {
-        FILE *archivoUsuarios=fopen("Usuarios","ab");
-        if(archivoUsuarios!=NULL)
-        {
-            fwrite(&datos,sizeof(stUsuario),1,archivoUsuarios);
-            fclose(archivoUsuarios);
-        }
-        boton=0;
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
     }
-    return boton;
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO: CREAR CUENTA                                                                             ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" NOMBRE Y APELLIDO: %-29s ",datos.nombre);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" NUMERO DE DOCUMENTO: %-27i ",datos.dni);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 12
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 13
+        color(128);
+        printf(" EDAD: %-42i ",datos.edad);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 14
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 15
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 16
+        color(128);
+        printf(" NOMBRE DE USUARIO: %-29s ",datos.usuario);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 17
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 18
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 19
+        color(128);
+        printf(" CONTRASENA: %-36s ",datos.contrasena);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 20
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                               ");
+        color(32);
+        printf(" CREAR CUENTA (1) ");
+        color(249);
+        printf(" ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                               ");
+        color(32);
+        printf("                  ");
+        color(249);
+        printf(" ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" 31/05/22 ");
+        color(0);
+        printf(" \n");
+    }
 }
 
 //VENTANASALUMNOS
@@ -5160,4 +4914,17 @@ int color(int num)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),num);
 	return 0;
+}
+//FECHA
+stFecha fechaActual()
+{
+    stFecha fecha;
+    time_t now;
+    time(&now);
+    struct tm *local=localtime(&now);
+    fecha.dia=local->tm_mday;         // get day of month (1 to 31)
+    fecha.mes=local->tm_mon+1;        // get month of year (0 to 11)
+    fecha.ano=local->tm_year+1900;    // get year since 1900
+    //printf("La fecha es: %02d/%02d/%d\n",fecha.dia,fecha.mes,fecha.ano);
+    return fecha;
 }
