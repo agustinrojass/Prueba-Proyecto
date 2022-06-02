@@ -1462,20 +1462,25 @@ int iniciarSesionAlumno()
         //gets(sesion.contrasena);
 
         {   //ASTERISCOS CONTRASENA
-            int p=0;
+             int p=0;
             do
             {
                 sesion.contrasena[p]=getch();
-                if((sesion.contrasena[p]!='\r') || sesion.contrasena[p]!='\b')
+                if(sesion.contrasena[p]!= '\r')
                 {
-                    printf("*");
-                    //printf("%c",sesion.contrasena[p]);
+                    if(sesion.contrasena[p]!='\b')
+                    {
+                        //printf("%c",sesion.contrasena[p]);
+                        printf("*");
+                    }else if (p!=0){
+                        printf("\b \b");
+                        p--;
+                    }
+                    p++;
                 }
-                p++;
             }
-            while(sesion.contrasena[p-1]!='\r');
-            sesion.contrasena[p-1]='\0';
-            getch();
+            while(sesion.contrasena[p]!='\r');
+            sesion.contrasena[p]='\0';
         }
 
         if(strcmp(sesion.contrasena,volverString)==0)
