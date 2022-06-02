@@ -1,15 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 #include <windows.h>
 #include <unistd.h>
 #include <time.h>
 
-//VERSION 1.2
-
-//CREAR APLICACION DE UTN WALLET
-
-//FALTA PARTE ADMIN
+//UTN WALLET: VERSION ALPHA
 
 
 //EN CREAR CUENTA: AGREGAR QUE SE PUEDA CANCELAR EN CUALQUIER MOMENTO
@@ -18,16 +15,20 @@
 //EN INICIAR SESION: AGREGAR QUE SE PUEDA CANCELAR EN CUALQUIER MOMENTO
 
 
-//SE PUEDE AGREGAR CONFIRMACIONES, DETALLES, ERRORES, ETC EN PAGOS/COMPRAS/DEPOSITOS
-
 //AGREGAR "TOKEN" PARA LA COMPRA/VENTA
+
+
+
+//FALTA PARTE ADMIN
+
+//SE PUEDE AGREGAR CONFIRMACIONES, DETALLES, ERRORES, ETC EN PAGOS/COMPRAS/DEPOSITOS
 
 //AGREGAR TIMEOUTS
 
 //AGREGAR ARCHIVO DE TRANSACCIONES
 
 
-typedef struct
+typedef struct  //STRUCT USUARIO
 {
     char nombre[20];
     int dni;
@@ -36,13 +37,13 @@ typedef struct
     char contrasena[20];
     float saldo;
 } stUsuario;
-typedef struct
+typedef struct  //STRUCT ADMIN
 {
     char nombre[20];
     char usuario[20];
     char contrasena[20];
 } stAdmin;
-typedef struct
+typedef struct  //STRUCT FECHA
 {
     int dia;
     int mes;
@@ -64,10 +65,12 @@ void pantallaInicio();
 //ALUMNOS
 void alumnos();                                     //BOTON 1
 void pantallaAlumnos();
-int iniciarSesionAlumno();                          //BOTON 3
-void IniciarSesionPantalla4(stUsuario sesion);
+int iniciarSesionAlumno();                          //BOTON 3: INICIAR SSESION
+void iniciarSesionPantalla1(int ronda);
+void iniciarSesionPantalla2(int ronda,stUsuario sesion);
+void iniciarSesionPantalla3(stUsuario sesion);
 void iniciando();
-int crearCuentaAlumno();                            //BOTON 4
+int crearCuentaAlumno();                            //BOTON 4: CREAR CUENTA
 void pantalla1CrearCuenta();
 void pantalla2CrearCuenta(int ronda,stUsuario datos);
 void pantalla3CrearCuenta(stUsuario datos);
@@ -1416,10 +1419,114 @@ void pantallaAlumnos()
         printf(" \n");
     }
 }
+
+
 int iniciarSesionAlumno()
 {
-    int flag=0,boton;
+    int flag=0,boton,ronda=1;
+    char volverString[10]="0";
     stUsuario sesion,cuenta;
+    //USUARIO
+    while(flag!=1)
+    {
+        iniciarSesionPantalla1(ronda);
+        fflush(stdin);
+        gets(sesion.usuario);
+        if(strcmp(sesion.usuario,volverString)==0)
+        {
+            boton=0;
+            return boton;
+        }
+        FILE *archivo=fopen("Registro","rb");
+        if(archivo!=NULL)
+        {
+            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
+            {
+                if(strcmp(sesion.usuario,cuenta.usuario)==0)
+                {
+                    flag=1;
+                }
+            }
+            fclose(archivo);
+        }
+        ronda++;
+        system("cls");
+    }
+    //CONTRASENA
+    flag=0;
+    ronda=1;
+    while(flag!=1)
+    {
+        iniciarSesionPantalla2(ronda,sesion);
+        fflush(stdin);
+        //gets(sesion.contrasena);
+
+        {   //ASTERISCOS CONTRASENA
+            int p=0;
+            do
+            {
+                sesion.contrasena[p]=getch();
+                if((sesion.contrasena[p]!='\r') || sesion.contrasena[p]!='\b')
+                {
+                    printf("*");
+                    //printf("%c",sesion.contrasena[p]);
+                }
+                p++;
+            }
+            while(sesion.contrasena[p-1]!='\r');
+            sesion.contrasena[p-1]='\0';
+            getch();
+        }
+
+        if(strcmp(sesion.contrasena,volverString)==0)
+        {
+            boton=0;
+            return boton;
+        }
+        FILE *archivo=fopen("Registro","rb");
+        if(archivo!=NULL)
+        {
+            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
+            {
+                if((strcmp(sesion.usuario,cuenta.usuario)==0)&&(strcmp(sesion.contrasena,cuenta.contrasena)==0))
+                {
+                    flag=1;
+                }
+            }
+            fclose(archivo);
+        }
+        ronda++;
+        system("cls");
+    }
+    //INCIANDO
+    do
+    {
+        iniciarSesionPantalla3(sesion);
+        scanf("%i",&boton);
+        system("cls");
+    }
+    while(boton!=1 && boton!=0);
+    if(boton==1)
+    {
+        FILE *archivo=fopen("Registro","rb");
+        if(archivo!=NULL)
+        {
+            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0))
+            {
+                if(strcmp(sesion.usuario,cuenta.usuario)==0)
+                {
+                    iniciando();
+                    system("cls");
+                    boton=ventanasAlumnos(cuenta,boton);
+                }
+            }
+            fclose (archivo);
+        }
+    }
+    return boton;
+}
+void iniciarSesionPantalla1(int ronda)
+{
     {   //CABECERA 1
         color(159);
         printf(" UTN WALLET                                                                                       ");
@@ -1450,9 +1557,21 @@ int iniciarSesionAlumno()
         color(0);
         printf(" \n");
     }
+    if(ronda==1)
     {   //LINEA 6
         color(249);
         printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    else
+    {   //LINEA 6
+        color(249);
+        printf(" ");
+        color(79);
+        printf(" USUARIO NO ENCONTRADO ");
+        color(249);
+        printf("                                                                          ");
         color(0);
         printf(" \n");
     }
@@ -1461,85 +1580,9 @@ int iniciarSesionAlumno()
         printf(" NOMBRE DE USUARIO: ");
         color(15);
     }
-    fflush(stdin);
-    gets(sesion.usuario);
-    FILE *archivo=fopen("Registro","rb");
-    if(archivo!=NULL)
-    {
-        while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
-        {
-            if(strcmp(sesion.usuario,cuenta.usuario)==0)
-            {
-                flag=1;
-            }
-        }
-        fclose(archivo);
-    }
-    system("cls");
-    while(flag!=1)
-    {
-        {   //CABECERA 1
-            color(159);
-            printf(" UTN WALLET                                                                                       ");
-            color(0);
-            printf(" \n");
-        }
-        {   //CABECERA 2
-            color(159);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 3
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 4
-            color(128);
-            printf(" ALUMNO: INICIAR SESION                                                                           ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 5
-            color(128);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 6
-            color(249);
-            printf(" ");
-            color(79);
-            printf(" USUARIO NO ENCONTRADO ");
-            color(249);
-            printf("                                                                          ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 7
-            color(128);
-            printf(" NOMBRE DE USUARIO: ");
-            color(15);
-        }
-        fflush(stdin);
-        gets(sesion.usuario);
-        FILE *archivo=fopen("Usuarios","rb");
-        if(archivo!=NULL)
-        {
-            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
-            {
-                if(strcmp(sesion.usuario,cuenta.usuario)==0)
-                {
-                    flag=1;
-                }
-            }
-            fclose(archivo);
-        }
-        system("cls");
-    }
-    flag=0;
+}
+void iniciarSesionPantalla2(int ronda,stUsuario sesion)
+{
     {   //CABECERA 1
         color(159);
         printf(" UTN WALLET                                                                                       ");
@@ -1592,9 +1635,21 @@ int iniciarSesionAlumno()
         color(0);
         printf(" \n");
     }
+    if(ronda==1)
     {   //LINEA 9
         color(249);
         printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    else
+    {   //LINEA 9
+        color(249);
+        printf(" ");
+        color(79);
+        printf(" CONTRASENA INCORRECTA ");
+        color(249);
+        printf("                                                                          ");
         color(0);
         printf(" \n");
     }
@@ -1603,133 +1658,8 @@ int iniciarSesionAlumno()
         printf(" CONTRASENA: ");
         color(15);
     }
-    fflush(stdin);
-    gets(sesion.contrasena);
-    archivo=fopen("Registro","rb");
-    if(archivo!=NULL)
-    {
-        while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
-        {
-            if((strcmp(sesion.usuario,cuenta.usuario)==0)&&(strcmp(sesion.contrasena,cuenta.contrasena)==0))
-            {
-                flag=1;
-            }
-        }
-        fclose(archivo);
-    }
-    system("cls");
-    while(flag!=1)
-    {
-        {   //CABECERA 1
-            color(159);
-            printf(" UTN WALLET                                                                                       ");
-            color(0);
-            printf(" \n");
-        }
-        {   //CABECERA 2
-            color(159);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 3
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 4
-            color(128);
-            printf(" ALUMNO: INICIAR SESION                                                                           ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 5
-            color(128);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 6
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 7
-            color(128);
-            printf(" NOMBRE DE USUARIO: %-29s ",sesion.usuario);
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 8
-            color(128);
-            printf("                                                  ");
-            color(249);
-            printf("                                                ");
-            color(0);
-            printf(" \n");
-        }
-        {   //LINEA 9
-            color(249);
-            printf(" ");
-            color(79);
-            printf(" CONTRASENA INCORRECTA ");
-            color(249);
-            printf("                                                                          ");
-            color(0);
-            printf(" \n");
-        }
-        {   //SUBCABECERA 10
-            color(128);
-            printf(" CONTRASENA: ");
-            color(15);
-        }
-        fflush(stdin);
-        gets(sesion.contrasena);
-        FILE *archivo=fopen("Registro","rb");
-        if(archivo!=NULL)
-        {
-            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
-            {
-                if((strcmp(sesion.usuario,cuenta.usuario)==0)&&(strcmp(sesion.contrasena,cuenta.contrasena)==0))
-                {
-                    flag=1;
-                }
-            }
-            fclose(archivo);
-        }
-        system("cls");
-    }
-    do
-    {
-        IniciarSesionPantalla4(sesion);
-        scanf("%i",&boton);
-        system("cls");
-    }
-    while(boton!=1 && boton!=0);
-    if(boton==1)
-    {
-        FILE *archivo=fopen("Registro","rb");
-        if(archivo!=NULL)
-        {
-            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0))
-            {
-                if(strcmp(sesion.usuario,cuenta.usuario)==0)
-                {
-                    iniciando();
-                    system("cls");
-                    boton=ventanasAlumnos(cuenta,boton);
-                }
-            }
-            fclose (archivo);
-        }
-    }
-    return boton;
 }
-void IniciarSesionPantalla4(stUsuario sesion)
+void iniciarSesionPantalla3(stUsuario sesion)
 {
     stFecha fecha=fechaActual();
     {   //CABECERA 1
@@ -1917,7 +1847,6 @@ void IniciarSesionPantalla4(stUsuario sesion)
             printf(" \n");
         }
 }
-
 void iniciando()
 {
     {   //CABECERA 1
@@ -2518,6 +2447,7 @@ void iniciando()
     }
     sleep(2);
 }
+
 int crearCuentaAlumno()
 {
     stUsuario datos,datosAux;
@@ -4263,7 +4193,7 @@ int administradores()
             case 5:
             {
                 system("cls");
-                iniciarSesionAlumno();
+                //iniciarSesionAdministrador();
                 system("pause");
                 system("cls");
             }
@@ -4271,7 +4201,7 @@ int administradores()
             case 6:
             {
                 system("cls");
-                crearCuentaAlumno();
+                //crearCuentaAdministrador();
                 system("pause");
                 system("cls");
             }
@@ -4925,6 +4855,5 @@ stFecha fechaActual()
     fecha.dia=local->tm_mday;         // get day of month (1 to 31)
     fecha.mes=local->tm_mon+1;        // get month of year (0 to 11)
     fecha.ano=local->tm_year+1900;    // get year since 1900
-    //printf("La fecha es: %02d/%02d/%d\n",fecha.dia,fecha.mes,fecha.ano);
     return fecha;
 }
