@@ -23,6 +23,21 @@ typedef struct  //STRUCT ADMIN
     char contrasena[20];
     float saldo;
 } stAdmin;
+typedef struct  //STRUCT TOKEN
+{
+    int token;
+    int dni;
+    char origen[20];
+    char destino[20];
+    char detalle[50];
+    float monto;
+    stFecha fecha;
+    int acreditado;
+} stToken;
+//COLORES
+int color(int num);
+//FECHA
+stFecha fechaActual();
 //INICIO
 void pantallaInicio();                                          //PANTALLA INICIO
 //ALUMNOS
@@ -40,10 +55,12 @@ void crearCuentaAlumnoPantalla4(int ronda,stUsuario datos);             //PANTAL
 void crearCuentaAlumnoPantalla5(int ronda,stUsuario datos);             //PANTALLA QUE PIDE CONTRASENA
 void crearCuentaAlumnoPantalla6(int ronda,stUsuario datos);             //PANTALLA QUE PIDE REPETIR CONTRASENA
 void crearCuentaAlumnoPantalla7(int boton,stUsuario datos);             //PANTALLA QUE PIDE CONFIRMAR/CANCELAR
-//ESTADO DE LA CUENTA
+//VENTANAS
 void estadoDeCuentaAlumnoPantalla(stUsuario sesion);                    //PANTALLA ESTADO DE LA CUENTA DEL ALUMNO
-//DATOS PERSONALES
 void datosPersonalesPantalla(stUsuario sesion);                         //PANTALLA DATOS PERSONALES DEL ALUMNO
+void depositoPantalla1();                                               //PANTALLA DEPOSITO QUE PIDE MONTO
+void depositoPantalla2(stToken transaccion);                            //PANTALLA DEPOSITO QUE PIDE CONFIRMAR/CANCELAR
+void depositoPantalla3(stToken transaccion);                            //PANTALLA DEPOSITO QUE MUESTRA TOKEN
 //ADMINS
 void pantallaAdministradores();                                     //PANTALLA ADMINISTRADORES
 //INICIAR SESION
@@ -57,11 +74,10 @@ void crearCuentaAdminPantalla2(int ronda,stAdmin datos);                //PANTAL
 void crearCuentaAdminPantalla3(int ronda,stAdmin datos);                //PANTALLA QUE PIDE CONTRASENA
 void crearCuentaAdminPantalla4(int ronda,stAdmin datos);                //PANTALLA QUE PIDE REPETIR CONTRASENA
 void crearCuentaAdminPantalla5(int boton,stAdmin datos);                //PANTALLA QUE PIDE CONFIRMAR/CANCELAR
-//ESTADO DE LA CUENTA
+//VENTANAS
 void estadoDeCuentaAdminPantalla(stAdmin sesion);                       //PANTALLA ESTADO DE LA CUENTA DEL ADMIN
-//COLORES
-int color(int num);
-//FECHA
-stFecha fechaActual();
-
+void adminDepositoPantalla1();                                          //PANTALLA DEPOSITO QUE PIDE TOKEN
+void adminDepositoPantalla2(int token);                                 //PANTALLA DEPOSITO QUE MUESTRA TOKEN
+void adminDepositoPantalla3(stToken taux);                              //PANTALLA DEPOSITO CONFIRMAR/CANCELAR
+void adminDepositoPantalla4(int token);                                 //PANTALLA DEPOSITO TOKEN NO ENCONTRADO
 //FIN
