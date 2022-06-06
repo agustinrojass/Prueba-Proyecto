@@ -7,9 +7,7 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET: VERSION ALPHA 1.6
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//TERMINAR EL "TOKEN" PARA LA COMPRA/VENTA. CUANDO EL ADMIN BUSCA EL TOKEN, HAY ERRORES.
+//UTN WALLET: VERSION ALPHA 1.7
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //FALTA HACER LA PARTE DE PAGOS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,13 +39,11 @@ int crearCuentaAdmin(int tipo);                                 //BOTON 4: CREAR
 int ventanasAdmin(stAdmin sesion,int boton);                    //VENTANAS
 int estadoDeCuentaAdmin(stAdmin sesion);                            //BOTON 1
 int adminDeposito();                                                //BOTON 3
-
+//MUESTRA TRANSACCIONES
 void muestra();
-
 //MAIN
 int main()
 {
-    //muestra();
     inicio();
     color(15);
     return 0;
@@ -947,7 +943,7 @@ int adminDeposito()                                                 //BOTON 3   
 {
     int boton;
     stToken transaccion;
-    stToken t;
+    stToken to;
     int token,flag=0;
     FILE *archivo=fopen("Transacciones","rb");
     if(archivo!=NULL)
@@ -956,12 +952,12 @@ int adminDeposito()                                                 //BOTON 3   
         adminDepositoPantalla1();
         scanf("%i",&token);
         system("cls");
-        while((fread(&t,sizeof(stToken),1,archivo)>0) && flag==0)
+        while((fread(&to,sizeof(stToken),1,archivo)>0) && flag==0)
         {
-            if(token==t.token)
+            if(token==to.token)
             {
                 flag=1;
-                transaccion=t;
+                transaccion=to;
             }
         }
         rewind(archivo);
@@ -994,10 +990,10 @@ int adminDeposito()                                                 //BOTON 3   
             {
                 while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
                 {
-                    if(transaccion.dni==aux.dni)
+                    if(transaccion.token==aux.token)
                     {
                         transaccion.acreditado=1;
-                        fseek(archivo2,ftell(archivo)-t,ftell(archivo));
+                        fseek(archivo2,-t,SEEK_CUR);
                         fwrite(&transaccion,sizeof(stToken),1,archivo2);
                         flag=1;
                     }
@@ -1005,7 +1001,7 @@ int adminDeposito()                                                 //BOTON 3   
                 rewind(archivo2);
                 fclose(archivo2);
             }
-            int flag=0;
+            flag=0;
             FILE *archivo3=fopen("Registro","r+b");
             if(archivo3!=NULL)
             {
@@ -1252,16 +1248,18 @@ int fotocopiadora(stUsuario sesion,float *pesos)                    //BOTON 9
 //FIN
 void muestra()
 {
+    color(137);
     stToken aux;
     FILE *archivo=fopen("Transacciones","rb");
     if(archivo!=NULL)
     {
         while(fread(&aux,sizeof(stToken),1,archivo)>0)
         {
-            printf("USUARIO: %-20s ",aux.destino);
-            printf("MONTO: %-22.2f ",aux.monto);
-            printf("DETALLE: %-20s ",aux.detalle);
-            printf("TOKEN: %-22i ",aux.token);
+            printf("USUARIO: %-15s |",aux.destino);
+            printf("MONTO: %-8.2f |",aux.monto);
+            printf("DETALLE: %-20s |",aux.detalle);
+            printf("TOKEN: %-8i |",aux.token);
+            printf("ACREDITADO: %i \n",aux.acreditado);
         }
         fclose(archivo);
     }
