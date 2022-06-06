@@ -9,7 +9,7 @@
 	<windows.h>
 	<unistd.h>
 
-1654176122 source:c:\users\usuario\documents\utn\2022\1er cuatrimestre\programación\archivos c\prueba-proyecto\main.c
+1654487327 source:c:\users\usuario\documents\utn\2022\1er cuatrimestre\programación\archivos c\prueba-proyecto\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -17,4 +17,17 @@
 	<windows.h>
 	<unistd.h>
 	<time.h>
+	"pantallas.h"
+
+1654458000 source:c:\users\usuario\documents\utn\2022\1er cuatrimestre\programación\archivos c\prueba-proyecto\pantallas.c
+	"pantallas.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	<unistd.h>
+	<time.h>
+
+1654457787 c:\users\usuario\documents\utn\2022\1er cuatrimestre\programación\archivos c\prueba-proyecto\pantallas.h
 
