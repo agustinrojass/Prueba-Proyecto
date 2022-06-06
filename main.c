@@ -6,10 +6,13 @@
 #include <unistd.h>
 #include <time.h>
 #include "pantallas.h"
+//15502
+//15567
+//27994
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //UTN WALLET: VERSION ALPHA 1.7
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//FALTA HACER LA PARTE DE PAGOS
+//FALTA HACER LA PARTE DE PAGOS Y HISTORIAL DE TRANSACCIONES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INICIO
 void inicio();                                          //MENU INICIO
@@ -44,6 +47,8 @@ void muestra();
 //MAIN
 int main()
 {
+    //color(15);
+    muestra();
     inicio();
     color(15);
     return 0;
@@ -1248,7 +1253,6 @@ int fotocopiadora(stUsuario sesion,float *pesos)                    //BOTON 9
 //FIN
 void muestra()
 {
-    color(137);
     stToken aux;
     FILE *archivo=fopen("Transacciones","rb");
     if(archivo!=NULL)
