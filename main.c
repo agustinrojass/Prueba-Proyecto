@@ -6,13 +6,10 @@
 #include <unistd.h>
 #include <time.h>
 #include "pantallas.h"
-//15502
-//15567
-//27994
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET: VERSION ALPHA 1.7
+//UTN WALLET: VERSION ALPHA 1.9
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//FALTA HACER LA PARTE DE PAGOS Y HISTORIAL DE TRANSACCIONES
+//FALTA HACER LA PARTE DE PAGOS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INICIO
 void inicio();                                          //MENU INICIO
@@ -27,11 +24,7 @@ int ventanasAlumnos(stUsuario sesion,int boton);                //VENTANAS
 int estadoDeCuentaAlumno(stUsuario sesion);                         //BOTON 1
 int datosPersonales(stUsuario sesion);                              //BOTON 2
 int deposito(stUsuario aux);                                        //BOTON 3
-//VER
-int pago(stUsuario sesion);                                         //BOTON 4
-int buffet(stUsuario sesion,float *pesos);                          //BOTON 7
-int cuota(stUsuario sesion,float *pesos);                           //BOTON 8
-int fotocopiadora(stUsuario sesion,float *pesos);                   //BOTON 9
+int historial(stUsuario sesion);                                    //BOTON 5
 //ADMINSITRADORES
 int administradores();                                      //BOTON 2: MENU ADMINISTRADORES
 //INICIAR SESION
@@ -44,11 +37,16 @@ int estadoDeCuentaAdmin(stAdmin sesion);                            //BOTON 1
 int adminDeposito();                                                //BOTON 3
 //MUESTRA TRANSACCIONES
 void muestra();
+//VER
+int pago(stUsuario sesion);                                         //BOTON 4
+int buffet(stUsuario sesion,float *pesos);                          //BOTON 7
+int cuota(stUsuario sesion,float *pesos);                           //BOTON 8
+int fotocopiadora(stUsuario sesion,float *pesos);                   //BOTON 9
 //MAIN
 int main()
 {
     //color(15);
-    muestra();
+    //muestra();
     inicio();
     color(15);
     return 0;
@@ -431,8 +429,6 @@ int crearCuentaAlumno()                                         //BOTON 4: CREAR
 //VENTANAS ALUMNOS
 int ventanasAlumnos(stUsuario sesion,int boton)                 //VENTANAS ALUMNOS
 {
-    //BORRAR SI NO SE USA
-    float pesos=0;
     do
     {
         switch(boton)
@@ -462,22 +458,10 @@ int ventanasAlumnos(stUsuario sesion,int boton)                 //VENTANAS ALUMN
                 boton=pago(sesion);
             }
             break;
-            case 7:
+            case 5:
             {
                 system("cls");
-                boton=buffet(sesion,&pesos);
-            }
-            break;
-            case 8:
-            {
-                system("cls");
-                boton=cuota(sesion,&pesos);
-            }
-            break;
-            case 9:
-            {
-                system("cls");
-                boton=fotocopiadora(sesion,&pesos);
+                boton=historial(sesion);
             }
             break;
         }
@@ -488,45 +472,13 @@ int ventanasAlumnos(stUsuario sesion,int boton)                 //VENTANAS ALUMN
 int estadoDeCuentaAlumno(stUsuario sesion)                          //BOTON 1
 {
     int boton;
-    //int tamano;
-    //float suma;
-    //stUsuario cuenta;
-    /*FILE *archivo=fopen("Usuarios","rb");
-    if(archivo!=NULL)
-    {
-        while(fread(&cuenta,sizeof(stUsuario),1,archivo)>0)
-        {
-            if(strcmp(sesion.usuario,cuenta.usuario)==0)
-            {
-                suma=cuenta.saldo+pesos;
-            }
-        }
-        fclose(archivo);
-    }*/
     do
     {
         estadoDeCuentaAlumnoPantalla(sesion);
         scanf("%i",&boton);
         system("cls");
     }
-    while(boton!=2 && boton!=3 && boton!=4 && boton!=0);
-    /*archivo=fopen("Usuarios","r+b");
-    if(archivo!=NULL)
-    {
-        while(fread(&cuenta,sizeof(stUsuario),1,archivo)>0)
-        {
-            if(strcmp(sesion.usuario,cuenta.usuario)==0)
-            {
-                tamano=sizeof(stUsuario);
-                cuenta.saldo=suma;
-                fseek(archivo,-tamano,SEEK_CUR);
-                fwrite(&cuenta,sizeof(stUsuario),1,archivo);
-            }
-        }
-        rewind(archivo);
-        fclose(archivo);
-    }
-    */
+    while(boton!=2 && boton!=3 && boton!=4 && boton!=5 && boton!=0);
     return boton;
 }
 int datosPersonales(stUsuario sesion)                               //BOTON 2
@@ -544,7 +496,7 @@ int datosPersonales(stUsuario sesion)                               //BOTON 2
 int deposito(stUsuario aux)                                         //BOTON 3
 {
     stFecha fecha=fechaActual();
-    int boton;
+    int boton,ronda=1;
     stToken transaccion;
     transaccion.dni=aux.dni;
     strcpy(transaccion.origen,"UTN");
@@ -554,9 +506,14 @@ int deposito(stUsuario aux)                                         //BOTON 3
     transaccion.acreditado=0;
     do
     {
-        depositoPantalla1();
-        scanf("%f",&transaccion.monto);
-        system("cls");
+        do
+        {
+            depositoPantalla1(ronda);
+            scanf("%f",&transaccion.monto);
+            system("cls");
+            ronda++;
+        }
+        while(transaccion.monto<=0);
         depositoPantalla2(transaccion);
         scanf("%i",&boton);
         system("cls");
@@ -631,6 +588,74 @@ int deposito(stUsuario aux)                                         //BOTON 3
         depositoPantalla3(transaccion);
         system("cls");
     }
+    return boton;
+}
+int historial(stUsuario sesion)                                     //BOTON 5
+{
+    int boton=4,i,d=0,flag=0,ultimo=0;
+    stToken aux;
+    int t=sizeof(stToken);
+    FILE *archivo=fopen("Transacciones","rb");
+    if(archivo!=NULL)
+    {
+        do
+        {
+            if(boton==4)
+            {
+                flag=0;
+                if(!feof(archivo))
+                {
+                    historialPantalla1();
+                }
+                d=0;
+                while(fread(&aux,sizeof(stToken),1,archivo)>0 && d<9)
+                {
+                    if(feof(archivo))
+                    {
+                        aux.dni=0;
+                    }
+                    if(sesion.dni==aux.dni)
+                    {
+                        flag=historialPantalla2(aux,flag);
+                        d++;
+                    }
+                }
+                if(d==9 && !feof(archivo))
+                {
+                    fseek(archivo,-t,SEEK_CUR);
+                }
+                if(d>0)
+                {
+                    for(i=d;i<9;i++)
+                    {
+                        flag=historialPantalla3(flag);
+                    }
+                    if(d<9)
+                    {
+                        ultimo=1;
+                    }
+                    else
+                    {
+                        ultimo=0;
+                    }
+                    historialPantalla4(ultimo);
+                }
+            }
+            do
+            {
+                scanf("%i",&boton);
+            }
+            while(boton!=4 && boton!=0);
+            if(d<9 || feof(archivo))
+            {
+                rewind(archivo);
+            }
+            system("cls");
+        }
+        while(boton!=0);
+        fclose(archivo);
+    }
+    boton=1;
     return boton;
 }
 //ADMINS
@@ -944,7 +969,7 @@ int estadoDeCuentaAdmin(stAdmin sesion)                             //BOTON 1
     }
     return boton;
 }
-int adminDeposito()                                                 //BOTON 3               //VER QUE NO ENCUENTRA BIEN EL TOKEN, TIENE ERRORES
+int adminDeposito()                                                 //BOTON 3               //VER QUE SI CAMBIAMOS A TOKEN ALFANUMERICO
 {
     int boton;
     stToken transaccion;
@@ -970,7 +995,7 @@ int adminDeposito()                                                 //BOTON 3   
     }
     adminDepositoPantalla2(token);
     system("cls");
-    if(flag==1)
+    if(flag==1 && transaccion.acreditado==0)
     {
         do
         {

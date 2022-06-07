@@ -58,9 +58,13 @@ void crearCuentaAlumnoPantalla7(int boton,stUsuario datos);             //PANTAL
 //VENTANAS
 void estadoDeCuentaAlumnoPantalla(stUsuario sesion);                    //PANTALLA ESTADO DE LA CUENTA DEL ALUMNO
 void datosPersonalesPantalla(stUsuario sesion);                         //PANTALLA DATOS PERSONALES DEL ALUMNO
-void depositoPantalla1();                                               //PANTALLA DEPOSITO QUE PIDE MONTO
+void depositoPantalla1(int ronda);                                      //PANTALLA DEPOSITO QUE PIDE MONTO
 void depositoPantalla2(stToken transaccion);                            //PANTALLA DEPOSITO QUE PIDE CONFIRMAR/CANCELAR
 void depositoPantalla3(stToken transaccion);                            //PANTALLA DEPOSITO QUE MUESTRA TOKEN
+void historialPantalla1();                                              //PANTALLA HISTORIAL PRINCIPIO
+int historialPantalla2(stToken aux,int flag);                           //PANTALLA HISTORIAL EXISTENTE
+int historialPantalla3(int flag);                                       //PANTALLA HISTORIAL NO EXISTENTE
+void historialPantalla4(int ultimo);                                    //PANTALLA HISTORIAL FIN
 //ADMINS
 void pantallaAdministradores();                                     //PANTALLA ADMINISTRADORES
 //INICIAR SESION
