@@ -4128,7 +4128,11 @@ void estadoDeCuentaAlumnoPantalla(stUsuario sesion)                     //PANTAL
     }
     {   //LINEA 27
         color(144);
-        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        printf(" ");
+        color(63);
+        printf(" HISTORIAL (5) ");
+        color(144);
+        printf("         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
         color(128);
         printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
         color(0);
@@ -4641,7 +4645,7 @@ void datosPersonalesPantalla(stUsuario sesion)                          //PANTAL
         printf(" \n");
     }
 }
-void depositoPantalla1()                                                //PANTALLA DEPOSITO QUE PIDE MONTO
+void depositoPantalla1(int ronda)                                       //PANTALLA DEPOSITO QUE PIDE MONTO
 {
     {   //CABECERA 1
         color(159);
@@ -4696,10 +4700,24 @@ void depositoPantalla1()                                                //PANTAL
         printf(" \n");
     }
     {   //LINEA 9
-        color(249);
-        printf("                                                                                                  ");
-        color(0);
-        printf(" \n");
+        if(ronda!=1)
+        {
+            color(249);
+            printf(" ");
+            color(79);
+            printf(" INGRESE UN MONTO VALIDO ");
+            color(249);
+            printf("                                                                        ");
+            color(0);
+            printf(" \n");
+        }
+        else
+        {
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+        }
     }
     {   //SUBCABECERA 10
         color(128);
@@ -5935,6 +5953,203 @@ void depositoPantalla3(stToken transaccion)                             //PANTAL
         printf(" \n");
     }
     sleep(5);
+}
+void historialPantalla1()                                               //PANTALLA HISTORIAL PRINCIPIO
+{
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                           ");
+        color(79);
+        printf(" VOLVER (0) ");
+        color(0);
+        printf(" \n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                      ");
+        color(79);
+        printf("            ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ALUMNO                                                                                           ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" HISTORIAL DE TRANSACCIONES                                                                       ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" FECHA    - ORIGEN          - DESTINO         - TOKEN - MONTO   - DETALLE               - ESTADO  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 12
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+}
+int historialPantalla2(stToken aux,int flag)                            //PANTALLA HISTORIAL EXISTENTE
+{
+    {   //SUBCABECERA 13
+        if(flag==0)
+        {
+            color(128);
+            printf(" %02i/%02i/%i%i - %-15s - %-15s - %i - %-7.2f - %-21s - ",aux.fecha.dia,aux.fecha.mes,(aux.fecha.ano%100)/10,aux.fecha.ano%10,aux.origen,aux.destino,aux.token,aux.monto,aux.detalle);
+            if(aux.acreditado==1)
+            {
+                printf("PAGO    ");
+            }
+            else
+            {
+                printf("NO PAGO ");
+            }
+            color(0);
+            printf(" \n");
+            flag=1;
+        }
+        else
+        {
+            color(159);
+            printf(" %02i/%02i/%i%i - %-15s - %-15s - %i - %-7.2f - %-21s - ",aux.fecha.dia,aux.fecha.mes,(aux.fecha.ano%100)/10,aux.fecha.ano%10,aux.origen,aux.destino,aux.token,aux.monto,aux.detalle);
+            if(aux.acreditado==1)
+            {
+                printf("PAGO    ");
+            }
+            else
+            {
+                printf("NO PAGO ");
+            }
+            color(0);
+            printf(" \n");
+            flag=0;
+        }
+    }
+    return flag;
+}
+int historialPantalla3(int flag)                                        //PANTALLA HISTORIAL NO EXISTENTE
+{
+    {   //SUBCABECERA 13
+        if(flag==0)
+        {
+            color(128);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+            flag=1;
+        }
+        else
+        {
+            color(159);
+            printf("                                                                                                  ");
+            color(0);
+            printf(" \n");
+            flag=0;
+        }
+    }
+    return flag;
+}
+void historialPantalla4(int ultimo)                                     //PANTALLA HISTORIAL FIN
+{
+    stFecha fecha=fechaActual();
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 24
+        if(ultimo==1)
+        {
+            color(249);
+            printf("                                                                                  ");
+            color(159);
+            printf(" PRINCIPIO (4) ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+        else
+        {
+            color(249);
+            printf("                                                                                  ");
+            color(159);
+            printf(" SIGUIENTE (4) ");
+            color(249);
+            printf(" ");
+            color(0);
+            printf(" \n");
+        }
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                  ");
+        color(159);
+        printf("               ");
+        color(249);
+        printf(" ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(" \n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
+        color(0);
+        printf(" \n");
+    }
 }
 //ADMINS
 void pantallaAdministradores()                                      //PANTALLA ADMINISTRADORES
