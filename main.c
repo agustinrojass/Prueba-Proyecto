@@ -7,9 +7,11 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET: VERSION ALPHA 1.9
+//UTN WALLET: VERSION ALPHA 1.10
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//FALTA HACER LA PARTE DE PAGOS
+//FALTA HACER PANTALLAS DE PAGO ADMIN Y ALUMNOS, Y VER QUE NO LE LLEGA LA PLATA AL ADMIN
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//SE PUEDE HACER FUNCION QUE PONGA EL SALDO A 0 PARA LOS ADMINS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INICIO
 void inicio();                                          //MENU INICIO
@@ -24,6 +26,7 @@ int ventanasAlumnos(stUsuario sesion,int boton);                //VENTANAS
 int estadoDeCuentaAlumno(stUsuario sesion);                         //BOTON 1
 int datosPersonales(stUsuario sesion);                              //BOTON 2
 int deposito(stUsuario aux);                                        //BOTON 3
+int pago(stUsuario *sesion);                                        //BOTON 4
 int historial(stUsuario sesion);                                    //BOTON 5
 //ADMINSITRADORES
 int administradores();                                      //BOTON 2: MENU ADMINISTRADORES
@@ -35,18 +38,14 @@ int crearCuentaAdmin(int tipo);                                 //BOTON 4: CREAR
 int ventanasAdmin(stAdmin sesion,int boton);                    //VENTANAS
 int estadoDeCuentaAdmin(stAdmin sesion);                            //BOTON 1
 int adminDeposito();                                                //BOTON 3
+int adminPago(stAdmin admin);                                       //BOTON 4
 //MUESTRA TRANSACCIONES
 void muestra();
-//VER
-int pago(stUsuario sesion);                                         //BOTON 4
-int buffet(stUsuario sesion,float *pesos);                          //BOTON 7
-int cuota(stUsuario sesion,float *pesos);                           //BOTON 8
-int fotocopiadora(stUsuario sesion,float *pesos);                   //BOTON 9
 //MAIN
 int main()
 {
-    //color(15);
-    //muestra();
+    color(15);
+    muestra();
     inicio();
     color(15);
     return 0;
@@ -455,7 +454,7 @@ int ventanasAlumnos(stUsuario sesion,int boton)                 //VENTANAS ALUMN
             case 4:
             {
                 system("cls");
-                boton=pago(sesion);
+                boton=pago(&sesion);
             }
             break;
             case 5:
@@ -537,14 +536,6 @@ int deposito(stUsuario aux)                                         //BOTON 3
                 while((fread(&taux,sizeof(stToken),1,archivo)>0) && flag==0)
                 {
                     transaccion.token=rand()%89999+10000;
-                    //VER COMO SOLUCIONARLO
-                    /*int i;
-                    char arreglo[]={'1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-                    srand(time(NULL));
-                    for(i=0;i<5;i++)
-                    {
-                        transaccion.token[i]=arreglo[rand()%37-1];
-                    }*/
                     if(transaccion.token==taux.token)
                     {
                         flag=1;
@@ -570,14 +561,6 @@ int deposito(stUsuario aux)                                         //BOTON 3
         else
         {
             transaccion.token=rand()%89999+10000;
-            //VER COMO SOLUCIONARLO
-            /*int i;
-            char arreglo[]={'1','2','3','4','5','6','7','8','9','0','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-            srand(time(NULL));
-            for(i=0;i<5;i++)
-            {
-                transaccion.token[i]=arreglo[rand()%37-1];
-            }*/
             archivo=fopen("Transacciones","ab");
             if(archivo!=NULL)
             {
@@ -587,6 +570,114 @@ int deposito(stUsuario aux)                                         //BOTON 3
         }
         depositoPantalla3(transaccion);
         system("cls");
+    }
+    return boton;
+}
+int pago(stUsuario *sesion)                                                          //BOTON 4 - HACER PANTALLAS Y VER QUE NO LE LLEGA LA PLATA AL ADMIN
+{
+    int boton;
+    stToken transaccion;
+    stToken to;
+    int token,flag=0;
+    FILE *archivo=fopen("Transacciones","rb");
+    if(archivo!=NULL)
+    {
+        rewind(archivo);
+        adminDepositoPantalla1();
+        scanf("%i",&token);
+        system("cls");
+        while((fread(&to,sizeof(stToken),1,archivo)>0) && flag==0)
+        {
+            if(token==to.token)
+            {
+                flag=1;
+                transaccion=to;
+            }
+        }
+        rewind(archivo);
+        fclose(archivo);
+    }
+    adminDepositoPantalla2(token);
+    system("cls");
+    if(flag==1 && transaccion.acreditado==0)
+    {
+        do
+        {
+            adminDepositoPantalla3(transaccion);
+            scanf("%i",&boton);
+            system("cls");
+        }
+        while(boton!=1 && boton!=0);
+        flag=0;
+        if(boton==0)
+        {
+            boton=1;
+        }
+        else
+        {
+            stToken aux;
+            stUsuario alumno;
+
+            int t=sizeof(stToken);
+            int u=sizeof(stUsuario);
+            FILE *archivo2=fopen("Transacciones","r+b");
+            if(archivo2!=NULL)
+            {
+                while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
+                {
+                    if(transaccion.token==aux.token)
+                    {
+                        transaccion.acreditado=1;
+                        fseek(archivo2,-t,SEEK_CUR);
+                        fwrite(&transaccion,sizeof(stToken),1,archivo2);
+                        flag=1;
+                        rewind(archivo2);
+                    }
+                }
+                fclose(archivo2);
+            }
+            flag=0;
+            FILE *archivo3=fopen("Registro","r+b");
+            if(archivo3!=NULL)
+            {
+                while((fread(&alumno,sizeof(stUsuario),1,archivo3)>0) && flag==0)
+                {
+                    if(transaccion.dni==alumno.dni)
+                    {
+                        alumno.saldo=alumno.saldo-transaccion.monto;
+                        *sesion=alumno;
+                        fseek(archivo3,-u,SEEK_CUR);
+                        fwrite(&alumno,sizeof(stUsuario),1,archivo3);
+                        flag=1;
+                    }
+                }
+                rewind(archivo3);
+                fclose(archivo3);
+            }
+            flag=0;
+            stUsuario admin;
+            FILE *archivo4=fopen("Admin","r+b");
+            if(archivo4!=NULL)
+            {
+                while((fread(&admin,sizeof(stAdmin),1,archivo4)>0) && flag==0)
+                {
+                    if(strcmp(transaccion.destino,admin.usuario)==0)
+                    {
+                        admin.saldo=admin.saldo+transaccion.monto;
+                        fseek(archivo4,-u,SEEK_CUR);
+                        fwrite(&admin,sizeof(stAdmin),1,archivo4);
+                        flag=1;
+                    }
+                }
+                rewind(archivo4);
+                fclose(archivo4);
+            }
+        }
+    }
+    else
+    {
+        boton=1;
+        adminDepositoPantalla4(token);
     }
     return boton;
 }
@@ -946,7 +1037,14 @@ int ventanasAdmin(stAdmin sesion,int boton)                     //VENTANAS ADMIN
             break;
             case 3:
             {
+                system("cls");
                 boton=adminDeposito(sesion);
+            }
+            break;
+            case 4:
+            {
+                system("cls");
+                boton=adminPago(sesion);
             }
         }
     }
@@ -969,7 +1067,7 @@ int estadoDeCuentaAdmin(stAdmin sesion)                             //BOTON 1
     }
     return boton;
 }
-int adminDeposito()                                                 //BOTON 3               //VER QUE SI CAMBIAMOS A TOKEN ALFANUMERICO
+int adminDeposito()                                                 //BOTON 3
 {
     int boton;
     stToken transaccion;
@@ -1026,9 +1124,9 @@ int adminDeposito()                                                 //BOTON 3   
                         fseek(archivo2,-t,SEEK_CUR);
                         fwrite(&transaccion,sizeof(stToken),1,archivo2);
                         flag=1;
+                        rewind(archivo2);
                     }
                 }
-                rewind(archivo2);
                 fclose(archivo2);
             }
             flag=0;
@@ -1057,97 +1155,67 @@ int adminDeposito()                                                 //BOTON 3   
     }
     return boton;
 }
-//VER SI SE USA
-int pago(stUsuario sesion)                                          //BOTON 4
+int adminPago(stAdmin admin)                                        //BOTON 4 - HACER PANTALLAS
 {
-    int boton;
-    do
+    stFecha fecha=fechaActual();
+    int boton,ronda=1,existe=0;
+    stToken transaccion;
+    stUsuario aux;
+    color(15);
+    FILE *archivo=fopen("Registro","rb");
+    if(archivo!=NULL)
     {
-        printf(" _________________________________________________________________________________ ______________ \n");
-        printf("| UTN WALLET                                                                      | CANCELAR (0) |\n");
-        printf("|_________________________________________________________________________________|______________|\n");
-        printf("| ALUMNO                                                                                         |\n");
-        printf("|________________________________________________________________________________________________|\n");
-        printf("| PAGAR                                                                                          |\n");
-        printf("|________________________________________ _______________________________________________________|\n");
-        printf("| DESTINATARIO:  ___________________     |                                                       |\n");
-        printf("|_______________| BUFFET (7)        |____|                                                       |\n");
-        printf("|               |___________________|                                                            |\n");
-        printf("|               | CUOTA (8)         |                                                            |\n");
-        printf("|               |___________________|                                                            |\n");
-        printf("|               | FOTOCOPIADORA (9) |                                                            |\n");
-        printf("|               |___________________|                                                            |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|________________________________________________________________________________________________|\n");
-        scanf("%i",&boton);
-        system("cls");
+        do
+        {
+            printf("INGRESE DNI DEL USUARIO: ");
+            scanf("%i",&transaccion.dni);
+            while(fread(&aux,sizeof(stUsuario),1,archivo)>0 && existe==0)
+            {
+                if(aux.dni==transaccion.dni)
+                {
+                    strcpy(transaccion.origen,aux.usuario);
+                    existe=1;
+                }
+            }
+            rewind(archivo);
+        }
+        while(existe==0);
+        fclose(archivo);
     }
-    while(boton!=7 && boton!=8 && boton!=9 && boton!=0);
-    if(boton==0)
+    switch(admin.tipo)
     {
-        boton=1;
+        case(1):
+        {
+            strcpy(transaccion.destino,"UTN");
+            strcpy(transaccion.detalle,"PAGO CUOTA");
+        }
+        break;
+        case(2):
+        {
+            strcpy(transaccion.destino,"BUFFET");
+            strcpy(transaccion.detalle,"PAGO BUFFET");
+        }
+        break;
+        case(3):
+        {
+            strcpy(transaccion.destino,"FOTOCOPIADORA");
+            strcpy(transaccion.detalle,"PAGO FOTOCOPIADORA");
+        }
+        break;
     }
-    return boton;
-}
-int buffet(stUsuario sesion,float *pesos)                           //BOTON 7
-{
-    int boton;
+    transaccion.fecha=fecha;
+    transaccion.acreditado=0;
     do
     {
         do
         {
-            printf(" ________________________________________________________________________________________________ \n");
-            printf("| UTN WALLET                                                                                     |\n");
-            printf("|________________________________________________________________________________________________|\n");
-            printf("| ALUMNO                                                                                         |\n");
-            printf("|________________________________________________________________________________________________|\n");
-            printf("| PAGAR                                                                                          |\n");
-            printf("|________________________________________ _______________________________________________________|\n");
-            printf("| DESTINATARIO: BUFFET                   |                                                       |\n");
-            printf("|________________________________________|                                                       |\n");
-            printf("| MONTO: $ ");
-            scanf("%f",pesos);
+            depositoPantalla1(ronda);
+            scanf("%f",&transaccion.monto);
             system("cls");
+            ronda++;
         }
-        while(*pesos>sesion.saldo);
-        printf(" _________________________________________________________________________________ ______________ \n");
-        printf("| UTN WALLET                                                                      | CANCELAR (0) |\n");
-        printf("|_________________________________________________________________________________|______________|\n");
-        printf("| ALUMNO                                                                                         |\n");
-        printf("|________________________________________________________________________________________________|\n");
-        printf("| PAGAR                                                                                          |\n");
-        printf("|________________________________________ _______________________________________________________|\n");
-        printf("| DESTINATARIO: BUFFET                   |                                                       |\n");
-        printf("|________________________________________|                                                       |\n");
-        printf("| MONTO: $ %-29.2f |                                                       |\n",*pesos);
-        printf("|________________________________________|                                                       |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                                                |\n");
-        printf("|                                                                               _______________  |\n");
-        printf("|                                                                              | CONFIRMAR (1) | |\n");
-        printf("|                                                                              |_______________| |\n");
-        printf("|________________________________________________________________________________________________|\n");
+        while(transaccion.monto<=0);
+        depositoPantalla2(transaccion);
         scanf("%i",&boton);
         system("cls");
     }
@@ -1155,107 +1223,55 @@ int buffet(stUsuario sesion,float *pesos)                           //BOTON 7
     if(boton==0)
     {
         boton=1;
-        *pesos=0;
+        transaccion.monto=0;
     }
     else
     {
-        *pesos=(-1)*(*pesos);
-    }
-    return boton;
-}
-int cuota(stUsuario sesion,float *pesos)                            //BOTON 8
-{
-    int boton;
-    do
-    {
-        do
+        int flag=0,repetido=1;
+        stToken taux;
+        srand(time(NULL));
+        FILE *archivo=fopen("Transacciones","rb");
+        if(archivo!=NULL)
         {
-            printf(" _________________________________________________________________________________ \n");
-            printf("| UTN WALLET                                                                      |\n");
-            printf("|_________________________________________________________________________________|\n");
-            printf("| PAGAR                                                                           |\n");
-            printf("|________________________________________ ________________________________________|\n");
-            printf("| DESTINATARIO: CUOTA                    |                                        |\n");
-            printf("|________________________________________|                                        |\n");
-            printf("| MONTO: $ ");
-            scanf("%f",pesos);
-            system("cls");
+            while(repetido==1)
+            {
+                while((fread(&taux,sizeof(stToken),1,archivo)>0) && flag==0)
+                {
+                    transaccion.token=rand()%89999+10000;
+                    if(transaccion.token==taux.token)
+                    {
+                        flag=1;
+                    }
+                }
+                if(flag==0)
+                {
+                    repetido=0;
+                }
+                else
+                {
+                    flag=0;
+                }
+            }
+            fclose(archivo);
+            archivo=fopen("Transacciones","ab");
+            if(archivo!=NULL)
+            {
+                fwrite(&transaccion,sizeof(stToken),1,archivo);
+                fclose(archivo);
+            }
         }
-        while(*pesos>sesion.saldo);
-        printf(" __________________________________________________________________ ______________ \n");
-        printf("| UTN WALLET                                                       | CANCELAR (0) |\n");
-        printf("|__________________________________________________________________|______________|\n");
-        printf("| PAGAR                                                                           |\n");
-        printf("|________________________________________ ________________________________________|\n");
-        printf("| DESTINATARIO: CUOTA                    |                                        |\n");
-        printf("|________________________________________|                                        |\n");
-        printf("| MONTO: $ %-29.2f |                                        |\n",*pesos);
-        printf("|________________________________________|                                        |\n");
-        printf("|                                                                                 |\n");
-        printf("|                                                                _______________  |\n");
-        printf("|                                                               | CONFIRMAR (1) | |\n");
-        printf("|                                                               |_______________| |\n");
-        printf("|_________________________________________________________________________________|\n");
-        scanf("%i",&boton);
-        system("cls");
-    }
-    while(boton!=1 && boton!=0);
-    if(boton==0)
-    {
-        boton=1;
-        *pesos=0;
-    }
-    else
-    {
-        *pesos=(-1)*(*pesos);
-    }
-    return boton;
-}
-int fotocopiadora(stUsuario sesion,float *pesos)                    //BOTON 9
-{
-    int boton;
-    do
-    {
-        do
+        else
         {
-            printf(" _________________________________________________________________________________ \n");
-            printf("| UTN WALLET                                                                      |\n");
-            printf("|_________________________________________________________________________________|\n");
-            printf("| PAGAR                                                                           |\n");
-            printf("|________________________________________ ________________________________________|\n");
-            printf("| DESTINATARIO: FOTOCOPIADORA            |                                        |\n");
-            printf("|________________________________________|                                        |\n");
-            printf("| MONTO: $ ");
-            scanf("%f",pesos);
-            system("cls");
+            transaccion.token=rand()%89999+10000;
+            archivo=fopen("Transacciones","ab");
+            if(archivo!=NULL)
+            {
+                fwrite(&transaccion,sizeof(stToken),1,archivo);
+                fclose(archivo);
+            }
         }
-        while(*pesos>sesion.saldo);
-        printf(" __________________________________________________________________ ______________ \n");
-        printf("| UTN WALLET                                                       | CANCELAR (0) |\n");
-        printf("|__________________________________________________________________|______________|\n");
-        printf("| PAGAR                                                                           |\n");
-        printf("|________________________________________ ________________________________________|\n");
-        printf("| DESTINATARIO: FOTOCOPIADIORA           |                                        |\n");
-        printf("|________________________________________|                                        |\n");
-        printf("| MONTO: $ %-29.2f |                                        |\n",*pesos);
-        printf("|________________________________________|                                        |\n");
-        printf("|                                                                                 |\n");
-        printf("|                                                                _______________  |\n");
-        printf("|                                                               | CONFIRMAR (1) | |\n");
-        printf("|                                                               |_______________| |\n");
-        printf("|_________________________________________________________________________________|\n");
-        scanf("%i",&boton);
+        depositoPantalla3(transaccion);
         system("cls");
-    }
-    while(boton!=1 && boton!=0);
-    if(boton==0)
-    {
-        boton=1;
-        *pesos=0;
-    }
-    else
-    {
-        *pesos=(-1)*(*pesos);
     }
     return boton;
 }
