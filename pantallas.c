@@ -11896,9 +11896,34 @@ void estadoDeCuentaAdminPantalla(stAdmin sesion)                        //PANTAL
         color(144);
         printf(" ");
         color(63);
-        printf(" LISTA USUARIOS (5) ");
-        color(144);
-        printf("    AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        switch(sesion.tipo)
+        {
+            case(1):
+            {
+                printf(" USER (5) ");
+                color(144);
+                printf(" ");
+                color(63);
+                printf(" RETIRO (7) ");
+                color(144);
+            }
+            break;
+            case(2):
+            {
+                printf(" RETIRAR DINERO (6) ");
+                color(144);
+                printf("   ");
+            }
+            break;
+            case(3):
+            {
+                printf(" RETIRAR DINERO (6) ");
+                color(144);
+                printf("   ");
+            }
+            break;
+        }
+        printf(" AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
         color(128);
         printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
         color(0);
@@ -15310,5 +15335,3103 @@ void listaUsuariosPantalla4(int ultimo)                                 //PANTAL
         color(0);
         printf(".\n");
     }
+}
+void retiroPantalla1(int ronda,stAdmin sesion)                          //PANTALLA RETIRO QUE PIDE MONTO
+{
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                         ");
+        color(79);
+        printf(" CANCELAR (0) ");
+        color(0);
+        printf(".\n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                    ");
+        color(79);
+        printf("              ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 4
+        switch(sesion.tipo)
+        {
+            case(2):
+            {   //SUBCABECERA 4
+                color(128);
+                printf(" ADMINISTRADOR BUFFET                                                                             ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+            case(3):
+            {   //SUBCABECERA 4
+                color(128);
+                printf(" ADMINISTRADOR FOTOCOPIADORA                                                                      ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+        }
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" RETIRAR DINERO                                                                                   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 9
+        if(ronda!=1)
+        {
+            color(249);
+            printf(" ");
+            color(79);
+            printf(" INGRESE UN MONTO VALIDO ");
+            color(249);
+            printf("                                                                        ");
+            color(0);
+            printf(".\n");
+        }
+        else
+        {
+            color(249);
+            printf("                                                                                                  ");
+            color(0);
+            printf(".\n");
+        }
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" MONTO: $ ");
+        color(15);
+    }
+}
+void retiroPantalla2(stToken transaccion,stAdmin sesion)                //PANTALLA RETIRO QUE PIDE CONFIRMAR/CANCELAR
+{
+    stFecha fecha=fechaActual();
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                         ");
+        color(79);
+        printf(" CANCELAR (0) ");
+        color(0);
+        printf(".\n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                    ");
+        color(79);
+        printf("              ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 4
+        switch(sesion.tipo)
+        {
+            case(2):
+            {
+                color(128);
+                printf(" ADMINISTRADOR BUFFET                                                                             ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+            case(3):
+            {
+                color(128);
+                printf(" ADMINISTRADOR FOTOCOPIADORA                                                                      ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+        }
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" RETIRAR DINERO                                                                                   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" MONTO: $ %-39.2f ",transaccion.monto);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(149);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                              ");
+        color(32);
+        printf(" GENERAR TOKEN (1) ");
+        color(249);
+        printf(" ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                              ");
+        color(32);
+        printf("                   ");
+        color(249);
+        printf(" ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
+        color(0);
+        printf(".\n");
+    }
+}
+void retiroPantalla3(stToken transaccion,stAdmin sesion)                //PANTALLA RETIRO QUE MUESTRA TOKEN
+{
+    stFecha fecha=fechaActual();
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(".\n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 4
+        switch(sesion.tipo)
+        {
+            case(2):
+            {
+                color(128);
+                printf(" ADMINISTRADOR BUFFET                                                                             ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+            case(3):
+            {
+                color(128);
+                printf(" ADMINISTRADOR FOTOCOPIADORA                                                                      ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+        }
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" RETIRAR DINERO                                                                                   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" MONTO: $ %-39.2f ",transaccion.monto);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf(" ");
+        color(79);
+        printf(" TOKEN: %05i ",transaccion.token);
+        color(159);
+        printf("  ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
+        color(0);
+        printf(".\n");
+    }
+    sleep(5);
+}
+void adminRetiroPantalla1()                                             //PANTALLA RETIRO QUE PIDE TOKEN
+{
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                         ");
+        color(79);
+        printf(" CANCELAR (0) ");
+        color(0);
+        printf(".\n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                    ");
+        color(79);
+        printf("              ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ADMINISTRADOR UTN                                                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" RETIRAR DINERO                                                                                   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" INGRESE EL TOKEN: ");
+        color(15);
+    }
+}
+void adminRetiroPantalla2(int token)                                    //PANTALLA RETIRO QUE MUESTRA TOKEN
+{
+    stFecha fecha=fechaActual();
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                         ");
+        color(79);
+        printf(" CANCELAR (0) ");
+        color(0);
+        printf(".\n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                    ");
+        color(79);
+        printf("              ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ADMINISTRADOR UTN                                                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" RETIRAR DINERO                                                                                   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" TOKEN: %-5i                                     ",token);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //BUSCANDO TOKEN + LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(79);
+        printf(" BUSCANDO TOKEN ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
+        color(0);
+        printf(".\n");
+    }
+    sleep(2);
+}
+void adminRetiroPantalla3(stToken taux)                                 //PANTALLA RETIRO DEL CONFIRMAR/CANCELAR
+{
+    stFecha fecha=fechaActual();
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                         ");
+        color(79);
+        printf(" CANCELAR (0) ");
+        color(0);
+        printf(".\n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                    ");
+        color(79);
+        printf("              ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ADMINISTRADOR UTN                                                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" RETIRAR DINERO                                                                                   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" USUARIO: %-39s ",taux.destino);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA + LOGO 13
+        color(128);
+        printf(" DNI: %-43i ",taux.dni);
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA + LOGO 14
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA + LOGO 16
+        color(128);
+        printf(" MONTO: $ %-39.2f ",taux.monto);
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA + LOGO 17
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA + LOGO 19
+        color(128);
+        printf(" DETALLE: %-39s ",taux.detalle);
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA + LOGO 20
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA + LOGO 22
+        if(taux.acreditado==0)
+        {
+            color(128);
+            printf(" ACREDITADO: NO                                   ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(".\n");
+        }
+        else
+        {
+            color(128);
+            printf(" ACREDITADO: SI                                   ");
+            color(249);
+            printf("                                                ");
+            color(0);
+            printf(".\n");
+        }
+    }
+    {   //SUBCABECERA + LOGO 23
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                  ");
+        color(159);
+        printf(" CONFIRMAR (1) ");
+        color(249);
+        printf(" ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                  ");
+        color(159);
+        printf("               ");
+        color(249);
+        printf(" ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
+        color(0);
+        printf(".\n");
+    }
+}
+void adminRetiroPantalla4(int token)                                    //PANTALLA RETIRO TOKEN NO ENCONTRADO
+{
+    stFecha fecha=fechaActual();
+    {   //CABECERA 1
+        color(159);
+        printf(" UTN WALLET                                                                                       ");
+        color(0);
+        printf(".\n");
+    }
+    {   //CABECERA 2
+        color(159);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 3
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 4
+        color(128);
+        printf(" ADMINISTRADOR UTN                                                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 5
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 6
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 7
+        color(128);
+        printf(" DEPOSITAR                                                                                        ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 8
+        color(128);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 9
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 10
+        color(128);
+        printf(" TOKEN: %-5i                                     ",token);
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //SUBCABECERA 11
+        color(128);
+        printf("                                                  ");
+        color(249);
+        printf("                                                ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 12
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 13
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("   ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 14
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 15
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //BUSCANDO TOKEN + LOGO 16
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(79);
+        printf(" TOKEN NO ENCONTRADO ");
+        color(249);
+        printf("      ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 17
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("     ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf(" ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 18
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("  ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("       ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("          ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 19
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LOGO 20
+        color(249);
+        printf("   ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("    ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("   ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf(" ");
+        color(159);
+        printf("         ");
+        color(249);
+        printf("    ");
+        color(159);
+        printf("   ");
+        color(249);
+        printf("      ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 21
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 22
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 23
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 24
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 25
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 26
+        color(249);
+        printf("                                                                                                  ");
+        color(0);
+        printf(".\n");
+    }
+    {   //LINEA 27
+        color(144);
+        printf("                         AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA ");
+        color(128);
+        printf(" %02i/%02i/%i%i ",fecha.dia,fecha.mes,(fecha.ano%100)/10,fecha.ano%10);
+        color(0);
+        printf(".\n");
+    }
+    sleep(2);
 }
 //FIN

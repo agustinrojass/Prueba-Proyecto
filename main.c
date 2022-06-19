@@ -7,9 +7,9 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET: VERSION ALPHA 1.11
+//UTN WALLET: VERSION ALPHA 1.12
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//SE PUEDE HACER FUNCION QUE PONGA EL SALDO A 0 PARA LOS ADMINS
+//BORRAR ANTES DE ENTREGAR LAS FUNCIONES DE MUESTRA Y MUESRTAA
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INICIO
 void inicio();                                          //MENU INICIO
@@ -38,29 +38,16 @@ char estadoDeCuentaAdmin(stAdmin sesion);                           //BOTON 1
 char adminDeposito();                                               //BOTON 3
 char adminPago(stAdmin admin);                                      //BOTON 4
 char listaUsuarios();                                               //BOTON 5
-//MUESTRA TRANSACCIONES
+char retiroDinero(stAdmin admin);                                   //BOTON 6
+char adminRetiro();                                                 //BOTON 7
+//MUESTRA
 void muestra();
 void muestraA();
-void muestraR(stUsuario aux);
 //MAIN
 int main()
 {
-    /*char s[10],auxC;
-    int i,auxI,a=0;
-    printf("ingrese un numero: ");
-    fflush(stdin);
-    gets(s);
-    while(a<strlen(s))
-    {
-        auxC=s[strlen(s)-1-a];
-        auxI=auxC-48;
-        i=i+auxI*pow(10,(a));
-        a++;
-    }
-    printf("\nnumero: %i",i);*/
     color(15);
     muestra();
-    muestraA();
     inicio();
     color(15);
     return 0;
@@ -1125,6 +1112,18 @@ char ventanasAdmin(stAdmin sesion,char boton)                   //VENTANAS ADMIN
                 boton=listaUsuarios();
             }
             break;
+            case('6'):
+            {
+                system("cls");
+                boton=retiroDinero(sesion);
+            }
+            break;
+            case('7'):
+            {
+                system("cls");
+                boton=adminRetiro();
+            }
+            break;
         }
     }
     while(boton!='0');
@@ -1140,12 +1139,16 @@ char estadoDeCuentaAdmin(stAdmin sesion)                            //BOTON 1
         boton=getch();
         system("cls");
     }
-    while(boton!='3' && boton!='4' && boton!='5' && boton!='0');
-    if(sesion.tipo!=1 && boton=='3')
+    while(boton!='3' && boton!='4' && boton!='5' && boton!='6' && boton!='7' && boton!='0');
+    if(sesion.tipo!=1 && (boton=='3' || boton=='7'))
     {
         boton='1';
     }
     if(sesion.tipo!=1 && boton=='5')
+    {
+        boton='1';
+    }
+    if(sesion.tipo==1 && boton=='6')
     {
         boton='1';
     }
@@ -1442,21 +1445,220 @@ char listaUsuarios()                                                //BOTON 5
     boton='1';
     return boton;
 }
-/*archivo=fopen("Transacciones","rb");
+char retiroDinero(stAdmin admin)                                    //BOTON 6
+{
+    stFecha fecha=fechaActual();
+    char boton;
+    int ronda=1;
+    stToken transaccion;
+    switch(admin.tipo)
+    {
+        case(2):
+        {
+            strcpy(transaccion.origen,"BUFFET");
+            transaccion.dni=2;
+        }
+        break;
+        case(3):
+        {
+            strcpy(transaccion.origen,"FOTOCOPIADORA");
+            transaccion.dni=3;
+        }
+        break;
+    }
+    strcpy(transaccion.destino,"UTN");
+    strcpy(transaccion.detalle,"RETIRO DE DINERO");
+    transaccion.fecha=fecha;
+    transaccion.acreditado=0;
+    ronda=1;
+    do
+    {
+        retiroPantalla1(ronda,admin);
+        scanf("%f",&transaccion.monto);
+        system("cls");
+        ronda++;
+    }
+    while((transaccion.monto<=0 || transaccion.monto>50000) && transaccion.monto<=admin.saldo);
+    do
+    {
+        retiroPantalla2(transaccion,admin);
+        fflush(stdin);
+        boton=getch();
+        system("cls");
+    }
+    while(boton!='1' && boton!='0');
+    if(boton=='0')
+    {
+        boton='1';
+        transaccion.monto=0;
+    }
+    else
+    {
+        int flag=0,repetido=1;
+        stToken taux;
+        srand(time(NULL));
+        FILE *archivo=fopen("Transacciones","rb");
         if(archivo!=NULL)
         {
-            fread(&taux,sizeof(stToken),1,archivo);
-            printf("dni: i\n",taux.dni);
-            printf("usuario: %s\n",taux.destino);
-            printf("UTN: %s\n",taux.origen);
-            printf("Monto: %.2f\n",taux.monto);
-            printf("detalle: %s\n",taux.detalle);
-            printf("token: %i\n",taux.token);
-            printf("fecha: %02i/%02i/%i%i ",taux.fecha.dia,taux.fecha.mes,(taux.fecha.ano%100)/10,taux.fecha.ano%10);
-            system("pause");
+            while(repetido==1)
+            {
+                while((fread(&taux,sizeof(stToken),1,archivo)>0) && flag==0)
+                {
+                    transaccion.token=rand()%89999+10000;
+                    if(transaccion.token==taux.token)
+                    {
+                        flag=1;
+                    }
+                }
+                if(flag==0)
+                {
+                    repetido=0;
+                }
+                else
+                {
+                    flag=0;
+                }
+            }
             fclose(archivo);
+            archivo=fopen("Transacciones","ab");
+            if(archivo!=NULL)
+            {
+                fwrite(&transaccion,sizeof(stToken),1,archivo);
+                fclose(archivo);
+            }
         }
-*/
+        else
+        {
+            transaccion.token=rand()%89999+10000;
+            archivo=fopen("Transacciones","ab");
+            if(archivo!=NULL)
+            {
+                fwrite(&transaccion,sizeof(stToken),1,archivo);
+                fclose(archivo);
+            }
+        }
+        retiroPantalla3(transaccion,admin);
+        system("cls");
+    }
+    return boton;
+}
+char adminRetiro()                                                  //BOTON 7
+{
+    char boton;
+    stToken transaccion;
+    stToken to;
+    int token,flag=0;
+    FILE *archivo=fopen("Transacciones","rb");
+    if(archivo!=NULL)
+    {
+        do
+        {
+            adminRetiroPantalla1();
+            scanf("%i",&token);
+            system("cls");
+        }
+        while(token<0 || (token>0 && token<10000));
+        if(token==0)
+        {
+            boton='1';
+            return boton;
+        }
+        while((fread(&to,sizeof(stToken),1,archivo)>0) && flag==0)
+        {
+            if(token==to.token)
+            {
+                flag=1;
+                transaccion=to;
+            }
+        }
+        fclose(archivo);
+    }
+    adminRetiroPantalla2(token);
+    system("cls");
+    if(flag==1 && transaccion.acreditado==0 && (strcmp(transaccion.origen,"BUFFET")==0 || strcmp(transaccion.origen,"FOTOCOPIADORA")==0))
+    {
+        do
+        {
+            adminRetiroPantalla3(transaccion);
+            fflush(stdin);
+            boton=getch();
+            system("cls");
+        }
+        while(boton!='1' && boton!='0');
+        flag=0;
+        if(boton=='0')
+        {
+            boton='1';
+        }
+        else
+        {
+            stToken aux;
+            stAdmin admin;
+            char tipo[15];
+            int t=sizeof(stToken);
+            int v=sizeof(stAdmin);
+            FILE *archivo2=fopen("Transacciones","r+b");
+            if(archivo2!=NULL)
+            {
+                //rewind(archivo2);
+                while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
+                {
+                    if(transaccion.token==aux.token)
+                    {
+                        transaccion.acreditado=1;
+                        fseek(archivo2,-t,SEEK_CUR);
+                        fwrite(&transaccion,sizeof(stToken),1,archivo2);
+                        flag=1;
+                        rewind(archivo2);
+                    }
+                }
+                fclose(archivo2);
+            }
+            flag=0;
+            FILE *archivo3=fopen("Admin","r+b");
+            if(archivo3!=NULL)
+            {
+                //rewind(archivo3);
+                while((fread(&admin,sizeof(stAdmin),1,archivo3)>0) && flag==0)
+                {
+                    switch(admin.tipo)
+                    {
+                        case(1):
+                        {
+                            strcpy(tipo,"UTN");
+                        }
+                        break;
+                        case(2):
+                        {
+                            strcpy(tipo,"BUFFET");
+                        }
+                        break;
+                        case(3):
+                        {
+                            strcpy(tipo,"FOTOCOPIADORA");
+                        }
+                        break;
+                    }
+                    if(strcmp(transaccion.origen,tipo)==0)
+                    {
+                        admin.saldo=admin.saldo-transaccion.monto;
+                        fseek(archivo3,-v,SEEK_CUR);
+                        fwrite(&admin,sizeof(stAdmin),1,archivo3);
+                        flag=1;
+                        fseek(archivo3,0,SEEK_END);
+                    }
+                }
+                fclose(archivo3);
+            }
+        }
+    }
+    else
+    {
+        boton='1';
+        adminRetiroPantalla4(token);
+    }
+    return boton;
+}
 //FIN
 void muestra()
 {
@@ -1489,10 +1691,4 @@ void muestraA()
         }
         fclose(archivo);
     }
-}
-void muestraR(stUsuario aux)
-{
-    printf("NOMBRE: %-15s |",aux.nombre);
-    printf("USUARIO: %-15s |",aux.usuario);
-    printf("MONTO: %-8.2f \n",aux.saldo);
 }

@@ -98,4 +98,11 @@ void listaUsuariosPantalla1();                                          //PANTAL
 int listaUsuariosPantalla2(stUsuario aux,int flag);                     //PANTALLA USUARIO EXISTENTE
 int listaUsuariosPantalla3(int flag);                                   //PANTALLA USUARIO NO EXISTENTE
 void listaUsuariosPantalla4(int ultimo);                                //PANTALLA LISTA DE USUARIOS FIN
+void retiroPantalla1(int ronda,stAdmin sesion);                         //PANTALLA RETIRO QUE PIDE MONTO
+void retiroPantalla2(stToken transaccion,stAdmin sesion);               //PANTALLA RETIRO QUE PIDE CONFIRMAR/CANCELAR
+void retiroPantalla3(stToken transaccion,stAdmin sesion);               //PANTALLA RETIRO QUE MUESTRA TOKEN
+void adminRetiroPantalla1();                                            //PANTALLA RETIRO QUE PIDE TOKEN
+void adminRetiroPantalla2(int token);                                   //PANTALLA RETIRO QUE MUESTRA TOKEN
+void adminRetiroPantalla3(stToken taux);                                //PANTALLA RETIRO DEL CONFIRMAR/CANCELAR
+void adminRetiroPantalla4(int token);                                   //PANTALLA RETIRO TOKEN NO ENCONTRADO
 //FIN
