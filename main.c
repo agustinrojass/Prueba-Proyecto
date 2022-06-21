@@ -7,9 +7,7 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET: VERSION ALPHA 1.12
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//BORRAR ANTES DE ENTREGAR LAS FUNCIONES DE MUESTRA Y MUESRTAA
+//UTN WALLET: VERSION 1.13
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INICIO
 void inicio();                                          //MENU INICIO
@@ -40,14 +38,9 @@ char adminPago(stAdmin admin);                                      //BOTON 4
 char listaUsuarios();                                               //BOTON 5
 char retiroDinero(stAdmin admin);                                   //BOTON 6
 char adminRetiro();                                                 //BOTON 7
-//MUESTRA
-void muestra();
-void muestraA();
 //MAIN
 int main()
 {
-    color(15);
-    muestra();
     inicio();
     color(15);
     return 0;
@@ -1660,35 +1653,4 @@ char adminRetiro()                                                  //BOTON 7
     return boton;
 }
 //FIN
-void muestra()
-{
-    stToken aux;
-    FILE *archivo=fopen("Transacciones","rb");
-    if(archivo!=NULL)
-    {
-        while(fread(&aux,sizeof(stToken),1,archivo)>0)
-        {
-            printf("USUARIO: %-15s |",aux.destino);
-            printf("MONTO: %-8.2f |",aux.monto);
-            printf("DETALLE: %-20s |",aux.detalle);
-            printf("TOKEN: %-8i |",aux.token);
-            printf("ACREDITADO: %i \n",aux.acreditado);
-        }
-        fclose(archivo);
-    }
-}
-void muestraA()
-{
-    stAdmin aux;
-    FILE *archivo=fopen("Admin","rb");
-    if(archivo!=NULL)
-    {
-        while(fread(&aux,sizeof(stAdmin),1,archivo)>0)
-        {
-            printf("NOMBRE: %-15s |",aux.nombre);
-            printf("USUARIO: %-15s |",aux.usuario);
-            printf("MONTO: %-8.2f \n",aux.saldo);
-        }
-        fclose(archivo);
-    }
-}
+

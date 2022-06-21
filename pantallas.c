@@ -13777,7 +13777,7 @@ void adminPagoPantalla1(int ronda,stAdmin sesion)                       //PANTAL
     }
     {   //SUBCABECERA 10
         color(128);
-        printf(" DOCUMENTO: $ ");
+        printf(" DOCUMENTO: ");
         color(15);
     }
 }
