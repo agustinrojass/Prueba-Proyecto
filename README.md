@@ -18,7 +18,8 @@ Alta: Creación de cuentas - Activar cuentas<br>
 Baja: Desactivar cuentas<br>
 Modificación: Acreditación de depósitos/pagos - Alta/Baja de alumnos - Saldo de alumnos y admins<br>
 Listados: Historiales (general y por alumno) - Lista de usuarios<br>
-### Asteriscos - Generación y acreditación de token - Pantallas
+### Extras
+Asteriscos - Generación y acreditación de token - Pantallas
 
 ## Progreso semanal
 | Semana | Progreso |
