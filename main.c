@@ -7,7 +7,7 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.14
+//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.17
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ALUMNOS
 void alumnos();                                             //BOTON 1: MENU ALUMNOS
@@ -37,6 +37,7 @@ char listaUsuarios();                                               //BOTON 5
 char retiroDinero(stAdmin admin);                                   //BOTON 6
 char adminRetiro();                                                 //BOTON 7
 char historialTransacciones(stAdmin sesion);                        //BOTON 8
+char busquedaUsuario(int dni);                                      //BOTON 9
 //UNIVERSAL
 void contrasena(char cont[30]);                                 //ASTERISCOS
 stToken generadorToken(stToken transaccion);                    //TOKEN
@@ -110,13 +111,14 @@ void alumnos()                                              //BOTON 1: MENU ALUM
 //INICIAR SESION
 char iniciarSesionAlumno()                                      //BOTON 3: INICIAR SESION
 {
-    int flag=0,ronda=1;
+    int flag=0,ronda=1,acceso=0;
     char boton;
     stUsuario sesion,cuenta;
+    stAdmin admin;
     //USUARIO
     while(flag!=1)
     {
-        iniciarSesionAlumnoPantalla1(ronda);
+        iniciarSesionPantalla1(ronda,acceso);
         fflush(stdin);
         gets(sesion.usuario);
         if(strcmp(sesion.usuario,"0")==0)
@@ -129,7 +131,7 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
         {
             while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
             {
-                if(strcmp(sesion.usuario,cuenta.usuario)==0)
+                if(strcmp(sesion.usuario,cuenta.usuario)==0 && cuenta.estado==1)
                 {
                     flag=1;
                 }
@@ -144,7 +146,7 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
     ronda=1;
     while(flag!=1)
     {
-        iniciarSesionAlumnoPantalla2(ronda,sesion);
+        iniciarSesionPantalla2(ronda,acceso,sesion,admin);
         contrasena(sesion.contrasena);
         if((strcmp(sesion.contrasena,"0")==0)||ronda>4)
         {
@@ -169,7 +171,7 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
     //INCIANDO
     do
     {
-        iniciarSesionAlumnoPantalla3(sesion);
+        iniciarSesionPantalla3(acceso,sesion,admin);
         fflush(stdin);
         boton=getch();
         system("cls");
@@ -184,7 +186,7 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
             {
                 if(strcmp(sesion.usuario,cuenta.usuario)==0)
                 {
-                    iniciandoPantalla();
+                    iniciandoPantalla(acceso);
                     system("cls");
                     boton=ventanasAlumnos(cuenta,boton);
                 }
@@ -201,6 +203,8 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
     stUsuario datos,datosAux;
     char boton='2';
     int ronda=1,repetido=1,flag=0;
+    //ESTADO
+    datos.estado=1;
     //NOMBRE
     crearCuentaAlumnoPantalla1();
     fflush(stdin);
@@ -445,10 +449,11 @@ char ventanasAlumnos(stUsuario sesion,char boton)               //VENTANAS ALUMN
 }
 char estadoDeCuentaAlumno(stUsuario sesion)                         //BOTON 1
 {
+    int acceso=0;
     char boton;
     do
     {
-        estadoDeCuentaAlumnoPantalla(sesion);
+        estadoDeCuentaAlumnoPantalla(sesion,acceso);
         fflush(stdin);
         boton=getch();
         system("cls");
@@ -458,10 +463,11 @@ char estadoDeCuentaAlumno(stUsuario sesion)                         //BOTON 1
 }
 char datosPersonales(stUsuario sesion)                              //BOTON 2
 {
+    int acceso=0;
     char boton;
     do
     {
-        datosPersonalesPantalla(sesion);
+        datosPersonalesPantalla(sesion,acceso);
         fflush(stdin);
         boton=getch();
         system("cls");
@@ -564,7 +570,6 @@ char pago(stUsuario *sesion)                                        //BOTON 4
             flag=0;
             stUsuario alumno;
             int u=sizeof(stUsuario);
-
             FILE *archivo3=fopen("Registro","r+b");
             if(archivo3!=NULL)
             {
@@ -769,12 +774,13 @@ char administradores()                                      //BOTON 2: MENU ADMI
 char iniciarSesionAdmin()                                       //BOTON 3: INICIAR SESION
 {
     char boton='1',volverString[10]="0";
-    int flag=0,ronda=1;
+    int flag=0,ronda=1,acceso=1;
     stAdmin sesion,cuenta;
+    stUsuario usuario;
     //USUARIO
     while(flag!=1)
     {
-        iniciarSesionAdminPantalla1(ronda);
+        iniciarSesionPantalla1(ronda,acceso);
         fflush(stdin);
         gets(sesion.usuario);
         if(strcmp(sesion.usuario,volverString)==0)
@@ -802,7 +808,7 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
     ronda=1;
     while(flag!=1)
     {
-        iniciarSesionAdminPantalla2(ronda,sesion);
+        iniciarSesionPantalla2(ronda,acceso,usuario,sesion);
         contrasena(sesion.contrasena);
         if(strcmp(sesion.contrasena,"0")==0||ronda>4)
         {
@@ -824,9 +830,10 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
         ronda++;
         system("cls");
     }
+    //INICIANDO
     do
     {
-        iniciarSesionAdminPantalla3(sesion);
+        iniciarSesionPantalla3(acceso,usuario,sesion);
         fflush(stdin);
         boton=getch();
         system("cls");
@@ -841,7 +848,7 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
             {
                 if(strcmp(sesion.usuario,cuenta.usuario)==0)
                 {
-                    iniciandoAdminPantalla();
+                    iniciandoPantalla(acceso);
                     system("cls");
                     boton=ventanasAdmin(cuenta,boton);
                 }
@@ -1008,6 +1015,16 @@ char ventanasAdmin(stAdmin sesion,char boton)                   //VENTANAS ADMIN
                 boton=historialTransacciones(sesion);
             }
             break;
+            case('9'):
+            {
+                int dni;
+                color(15);
+                printf("Ingrese el documento: ");
+                scanf("%i",&dni);
+                system("cls");
+                boton=busquedaUsuario(dni);
+            }
+            break;
         }
     }
     while(boton!='0');
@@ -1023,7 +1040,7 @@ char estadoDeCuentaAdmin(stAdmin sesion)                            //BOTON 1
         boton=getch();
         system("cls");
     }
-    while(boton!='3' && boton!='4' && boton!='5' && boton!='6' && boton!='7' && boton!='8' && boton!='0');
+    while(boton!='3' && boton!='4' && boton!='5' && boton!='6' && boton!='7' && boton!='8' && boton!='9' && boton!='0');
     if(sesion.tipo!=1 && (boton=='3' || boton=='7'))
     {
         boton='1';
@@ -1037,6 +1054,10 @@ char estadoDeCuentaAdmin(stAdmin sesion)                            //BOTON 1
         boton='1';
     }
     if(sesion.tipo!=1 && boton=='8')
+    {
+        boton='1';
+    }
+    if(sesion.tipo!=1 && boton=='9')
     {
         boton='1';
     }
@@ -1099,7 +1120,6 @@ char adminDeposito()                                                //BOTON 3
             FILE *archivo3=fopen("Registro","r+b");
             if(archivo3!=NULL)
             {
-                //rewind(archivo3);
                 while((fread(&alumno,sizeof(stUsuario),1,archivo3)>0) && flag==0)
                 {
                     if(transaccion.dni==alumno.dni)
@@ -1386,7 +1406,6 @@ char adminRetiro()                                                  //BOTON 7
             FILE *archivo3=fopen("Admin","r+b");
             if(archivo3!=NULL)
             {
-                //rewind(archivo3);
                 while((fread(&admin,sizeof(stAdmin),1,archivo3)>0) && flag==0)
                 {
                     switch(admin.tipo)
@@ -1490,6 +1509,72 @@ char historialTransacciones(stAdmin sesion)                         //BOTON 8
     boton='1';
     return boton;
 }
+char busquedaUsuario(int dni)                                       //BOTON 9
+{
+    int existe=0,u=sizeof(stUsuario),acceso=1;
+    char boton;
+    stUsuario aux,alumno;
+    FILE *archivo=fopen("Registro","r+b");
+    if(archivo!=NULL)
+    {
+        while((fread(&aux,sizeof(stUsuario),1,archivo)>0) && existe==0)
+        {
+            if(dni==aux.dni)
+            {
+                existe=1;
+                alumno=aux;
+                fseek(archivo,-u,SEEK_CUR);
+                do
+                {
+                    estadoDeCuentaAlumnoPantalla(alumno,acceso);
+                    fflush(stdin);
+                    boton=getch();
+                    system("cls");
+                }
+                while(boton!='2' && boton!='3' && boton!='4' && boton!='5' && boton!='0');
+                if(boton=='3')
+                {
+                    alumno.estado=1;
+                }
+                if(boton=='4')
+                {
+                    alumno.estado=0;
+                }
+                fwrite(&alumno,sizeof(stUsuario),1,archivo);
+                fseek(archivo,0,SEEK_END);
+            }
+        }
+        fclose(archivo);
+    }
+    if(boton=='2')
+    {
+        do
+        {
+            datosPersonalesPantalla(alumno,acceso);
+            fflush(stdin);
+            boton=getch();
+            system("cls");
+        }
+        while(boton!='1' && boton!='0');
+    }
+    if(boton=='5')
+    {
+        boton=historial(alumno);
+    }
+    if(boton=='3' || boton=='4')
+    {
+        boton='1';
+    }
+    if(boton=='1')
+    {
+        boton=busquedaUsuario(dni);
+    }
+    if(boton=='0')
+    {
+        boton='1';
+    }
+    return boton;
+}
 //UNIVERSAL
 void contrasena(char cont[30])                                  //ASTERISCOS
 {
@@ -1524,7 +1609,6 @@ stToken generadorToken(stToken transaccion)                     //TOKEN
     stToken taux;
     srand(time(NULL));
     FILE *archivo=fopen("Transacciones","r+b");
-    //FILE *archivo=fopen("Transacciones","rb");
     if(archivo!=NULL)
     {
         fseek(archivo,0,SEEK_SET);
@@ -1550,14 +1634,6 @@ stToken generadorToken(stToken transaccion)                     //TOKEN
         fseek(archivo,0,SEEK_END);
         fwrite(&transaccion,sizeof(stToken),1,archivo);
         fclose(archivo);
-        //MOSTRAR A LOS CHICOS
-        //fclose(archivo);
-        //archivo=fopen("Transacciones","ab");
-        //if(archivo!=NULL)
-        //{
-        //    fwrite(&transaccion,sizeof(stToken),1,archivo);
-        //    fclose(archivo);
-        //}
     }
     else
     {
@@ -1578,7 +1654,6 @@ void acreditacionToken(stToken transaccion)                     //ACREDITACION D
     FILE *archivo2=fopen("Transacciones","r+b");
     if(archivo2!=NULL)
     {
-        //rewind(archivo2);
         while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
         {
             if(transaccion.token==aux.token)
