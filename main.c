@@ -7,7 +7,7 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.19
+//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.20
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ALUMNOS
 void alumnos();                                             //BOTON 1: MENU ALUMNOS
@@ -114,6 +114,7 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
     int flag=0,ronda=1,acceso=0;
     char boton;
     stUsuario sesion,cuenta;
+    stUsuario aux;
     stAdmin admin;
     //USUARIO
     while(flag!=1)
@@ -134,6 +135,7 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
                 if(strcmp(sesion.usuario,cuenta.usuario)==0 && cuenta.estado==1)
                 {
                     flag=1;
+                    aux=cuenta;
                 }
             }
             fclose(archivo);
@@ -153,17 +155,9 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
             boton='0';
             return boton;
         }
-        FILE *archivo=fopen("Registro","rb");
-        if(archivo!=NULL)
+        if(strcmp(sesion.contrasena,aux.contrasena)==0)
         {
-            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0) && flag==0)
-            {
-                if((strcmp(sesion.usuario,cuenta.usuario)==0)&&(strcmp(sesion.contrasena,cuenta.contrasena)==0))
-                {
-                    flag=1;
-                }
-            }
-            fclose(archivo);
+            flag=1;
         }
         ronda++;
         system("cls");
@@ -179,20 +173,9 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
     while(boton!='1' && boton!='0');
     if(boton=='1')
     {
-        FILE *archivo=fopen("Registro","rb");
-        if(archivo!=NULL)
-        {
-            while((fread(&cuenta,sizeof(stUsuario),1,archivo)>0))
-            {
-                if(strcmp(sesion.usuario,cuenta.usuario)==0)
-                {
-                    iniciandoPantalla(acceso);
-                    system("cls");
-                    boton=ventanasAlumnos(cuenta,boton);
-                }
-            }
-            fclose(archivo);
-        }
+        iniciandoPantalla(acceso);
+        system("cls");
+        boton=ventanasAlumnos(aux,boton);
     }
     return boton;
 }
@@ -775,7 +758,7 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
 {
     char boton='1',volverString[10]="0";
     int flag=0,ronda=1,acceso=1;
-    stAdmin sesion,cuenta;
+    stAdmin sesion,cuenta,aux;
     stUsuario usuario;
     //USUARIO
     while(flag!=1)
@@ -796,6 +779,7 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
                 if(strcmp(sesion.usuario,cuenta.usuario)==0)
                 {
                     flag=1;
+                    aux=cuenta;
                 }
             }
             fclose(archivo);
@@ -815,17 +799,9 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
             boton='0';
             return boton;
         }
-        FILE *archivo=fopen("Admin","rb");
-        if(archivo!=NULL)
+        if(strcmp(sesion.contrasena,aux.contrasena)==0)
         {
-            while((fread(&cuenta,sizeof(stAdmin),1,archivo)>0) && flag==0)
-            {
-                if((strcmp(sesion.usuario,cuenta.usuario)==0)&&(strcmp(sesion.contrasena,cuenta.contrasena)==0))
-                {
-                    flag=1;
-                }
-            }
-            fclose(archivo);
+            flag=1;
         }
         ronda++;
         system("cls");
@@ -841,20 +817,9 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
     while(boton!='1' && boton!='0');
     if(boton=='1')
     {
-        FILE *archivo=fopen("Admin","rb");
-        if(archivo!=NULL)
-        {
-            while((fread(&cuenta,sizeof(stAdmin),1,archivo)>0))
-            {
-                if(strcmp(sesion.usuario,cuenta.usuario)==0)
-                {
-                    iniciandoPantalla(acceso);
-                    system("cls");
-                    boton=ventanasAdmin(cuenta,boton);
-                }
-            }
-            fclose (archivo);
-        }
+        iniciandoPantalla(acceso);
+        system("cls");
+        boton=ventanasAdmin(aux,boton);
     }
     return boton;
 }
