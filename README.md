@@ -7,23 +7,26 @@ Wallet virtual de la UTN para poder pagar el buffet, la fotocopiadora y la cuota
 - Francisco Ugalde
 - Zeus Testa
 
+## Ruta de trabajo
+### Structs
+Files por struct (persistencia)<br>
+Registro -> stUsuarios<br>
+Admin -> stAdmins<br>
+Transacciones -> stToken<br>
+### ABML
+Alta: Creación de cuentas - Activar cuentas<br>
+Baja: Desactivar cuentas<br>
+Modificación: Acreditación de depósitos/pagos - Alta/Baja de alumnos - Saldo de alumnos y admins<br>
+Listados: Historiales (general y por alumno) - Lista de usuarios<br>
+### Asteriscos - Generación y acreditación de token - Pantallas
+
 ## Progreso semanal
 | Semana | Progreso |
 | - | - |
-| Semana 1 | Funciones de creación de cuenta e inicio de sesión, menus de navegación. | 
+| Semana 1 | Funciones de creación de cuenta e inicio de sesión, menús de navegación. | 
 | Semana 2 | Funciones de muestra "pantallas", estado de cuenta, datos personales, generación de token. |
 | Semana 3 | Funciones de modificación de datos, acreditación, historiales, listas. |
 | Semana 4 | Más funciones de muestra "pantallas", asteriscos para las contraseñas, modularización, alta y baja del alumno. |
-
-## Referencia de colores
-| Color  |  Imagen | Hex |
-| - | - | - |
-| Azul | ![#0037da](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Azul.png) | #0037da |
-| Blanco | ![#f2f2f2](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Blanco.png) | #f2f2f2 |
-| Gris | ![#767676](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Gris.png) | #767676 |
-| Azul claro | ![#3b78ff](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Azul%20Claro.png) | #3b78ff |
-| Rojo | ![#c50f1f](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Rojo.png) | #c50f1f |
-| Verde | ![#13a10e](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Verde.png) | #13a10e |
 
 ## Vista de la aplicación
 ### Inicio
@@ -34,13 +37,13 @@ Wallet virtual de la UTN para poder pagar el buffet, la fotocopiadora y la cuota
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Estado%20de%20cuenta%20alumno.png)
 ### Historial de transacciones
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Historial%20transacciones%20del%20alumno.png)
-### Depositar alumno
+### Depósito alumno
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Depositar%20alumno.png)
 ### Token depósito
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Token%20dep%C3%B3sito.png)
-### Confirmar depósito admin
+### Confirmación depósito admin
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Confirmar%20dep%C3%B3sito.png)
-### Buscar alumno para ver datos o editar
+### Búsqueda de alumno para ver datos o editar
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/B%C3%BAsqueda%20alumno.png)
 ### Lista de alumnos
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Lista%20alumnos.png)
@@ -83,3 +86,12 @@ typedef struct  //STRUCT TOKEN
     int acreditado;
 } stToken;
 ```
+## Referencia de colores
+| Color  |  Imagen | Hex |
+| - | - | - |
+| Azul | ![#0037da](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Azul.png) | #0037da |
+| Blanco | ![#f2f2f2](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Blanco.png) | #f2f2f2 |
+| Gris | ![#767676](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Gris.png) | #767676 |
+| Azul claro | ![#3b78ff](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Azul%20Claro.png) | #3b78ff |
+| Rojo | ![#c50f1f](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Rojo.png) | #c50f1f |
+| Verde | ![#13a10e](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Verde.png) | #13a10e |
