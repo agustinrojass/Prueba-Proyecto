@@ -28,10 +28,20 @@ Wallet virtual de la UTN para poder pagar el buffet, la fotocopiadora y la cuota
 ## Vista de la aplicación
 ### Inicio
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Inicio.png)
+### Inicio de sesión
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Inicio%20de%20sesi%C3%B3n.png)
 ### Estado de cuenta
-![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Estado%20de%20cuenta%20alumno.png)
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Estado%20de%20cuenta%20alumno.png)
 ### Historial de transacciones
-![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Historial%20transacciones%20del%20alumno.png)
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Historial%20transacciones%20del%20alumno.png)
+### Depositar alumno
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Depositar%20alumno.png)
+### Token depósito admin
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Token%20dep%C3%B3sito.png)
+### Confirmar depósito admin
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Confirmar%20dep%C3%B3sito.png)
+### Buscar alumno para ver datos o editar
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/B%C3%BAsqueda%20alumno.png)
 
 ## Estructuras
 ```c
