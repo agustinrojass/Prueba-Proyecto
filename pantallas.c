@@ -11802,7 +11802,11 @@ void estadoDeCuentaAdminPantalla(stAdmin sesion)                        //PANTAL
             case(1):
             {
                 color(249);
-                printf("                                                                     ");
+                printf("                                                       ");
+                color(159);
+                printf(" RETIRAR (7) ");
+                color(249);
+                printf(" ");
                 color(159);
                 printf(" DEPOSITAR (3) ");
                 color(249);
@@ -11847,7 +11851,11 @@ void estadoDeCuentaAdminPantalla(stAdmin sesion)                        //PANTAL
             case(1):
             {
                 color(249);
-                printf("                                                                     ");
+                printf("                                                       ");
+                color(159);
+                printf("             ");
+                color(249);
+                printf(" ");
                 color(159);
                 printf("               ");
                 color(249);
@@ -11900,11 +11908,11 @@ void estadoDeCuentaAdminPantalla(stAdmin sesion)                        //PANTAL
         {
             case(1):
             {
-                printf(" USER (5) ");
+                printf(" USERS (5) ");
                 color(144);
                 printf(" ");
                 color(63);
-                printf(" RETIRO (7) ");
+                printf(" HIST. (8) ");
                 color(144);
             }
             break;

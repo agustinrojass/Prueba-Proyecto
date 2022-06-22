@@ -7,10 +7,8 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET: VERSION 1.13
+//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.14
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//INICIO
-void inicio();                                          //MENU INICIO
 //ALUMNOS
 void alumnos();                                             //BOTON 1: MENU ALUMNOS
 //INICIAR SESION
@@ -38,15 +36,13 @@ char adminPago(stAdmin admin);                                      //BOTON 4
 char listaUsuarios();                                               //BOTON 5
 char retiroDinero(stAdmin admin);                                   //BOTON 6
 char adminRetiro();                                                 //BOTON 7
+char historialTransacciones(stAdmin sesion);                        //BOTON 8
+//UNIVERSAL
+void contrasena(char cont[30]);                                 //ASTERISCOS
+stToken generadorToken(stToken transaccion);                    //TOKEN
+void acreditacionToken(stToken transaccion);                    //ACREDITACION DEL TOKEN
 //MAIN
-int main()
-{
-    inicio();
-    color(15);
-    return 0;
-}
-//INICIO
-void inicio()                                           //MENU INICIO
+int main()                                              //MENU INICIO
 {
     char navegacion;
     do
@@ -76,6 +72,8 @@ void inicio()                                           //MENU INICIO
         }
     }
     while(navegacion!='0');
+    color(15);
+    return 0;
 }
 //ALUMNOS
 void alumnos()                                              //BOTON 1: MENU ALUMNOS
@@ -147,32 +145,7 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
     while(flag!=1)
     {
         iniciarSesionAlumnoPantalla2(ronda,sesion);
-        {   //ASTERISCOS CONTRASENA
-            int p=0;
-            do
-            {
-                fflush(stdin);
-                sesion.contrasena[p]=getch();
-                if(sesion.contrasena[p]!= '\r')
-                {
-                    if(sesion.contrasena[p]!='\b')
-                    {
-                        printf("*");
-                        p++;
-                    }
-                    else
-                    {
-                        if(p>0)
-                        {
-                            printf("\b \b");
-                            p--;
-                        }
-                    }
-                }
-            }
-            while(sesion.contrasena[p]!='\r');
-            sesion.contrasena[p]='\0';
-        }   //FIN ASTERISCOS
+        contrasena(sesion.contrasena);
         if((strcmp(sesion.contrasena,"0")==0)||ronda>4)
         {
             boton='0';
@@ -531,49 +504,7 @@ char deposito(stUsuario aux)                                        //BOTON 3
     }
     else
     {
-        int flag=0,repetido=1;
-        stToken taux;
-        srand(time(NULL));
-        FILE *archivo=fopen("Transacciones","rb");
-        if(archivo!=NULL)
-        {
-            while(repetido==1)
-            {
-                while((fread(&taux,sizeof(stToken),1,archivo)>0) && flag==0)
-                {
-                    transaccion.token=rand()%89999+10000;
-                    if(transaccion.token==taux.token)
-                    {
-                        flag=1;
-                    }
-                }
-                if(flag==0)
-                {
-                    repetido=0;
-                }
-                else
-                {
-                    flag=0;
-                }
-            }
-            fclose(archivo);
-            archivo=fopen("Transacciones","ab");
-            if(archivo!=NULL)
-            {
-                fwrite(&transaccion,sizeof(stToken),1,archivo);
-                fclose(archivo);
-            }
-        }
-        else
-        {
-            transaccion.token=rand()%89999+10000;
-            archivo=fopen("Transacciones","ab");
-            if(archivo!=NULL)
-            {
-                fwrite(&transaccion,sizeof(stToken),1,archivo);
-                fclose(archivo);
-            }
-        }
+        transaccion=generadorToken(transaccion);
         depositoPantalla3(transaccion);
         system("cls");
     }
@@ -629,28 +560,11 @@ char pago(stUsuario *sesion)                                        //BOTON 4
         }
         else
         {
-            stToken aux;
-            stUsuario alumno;
-            int t=sizeof(stToken);
-            int u=sizeof(stUsuario);
-            int v=sizeof(stAdmin);
-            FILE *archivo2=fopen("Transacciones","r+b");
-            if(archivo2!=NULL)
-            {
-                while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
-                {
-                    if(transaccion.token==aux.token)
-                    {
-                        transaccion.acreditado=1;
-                        fseek(archivo2,-t,SEEK_CUR);
-                        fwrite(&transaccion,sizeof(stToken),1,archivo2);
-                        flag=1;
-                        rewind(archivo2);
-                    }
-                }
-                fclose(archivo2);
-            }
+            acreditacionToken(transaccion);
             flag=0;
+            stUsuario alumno;
+            int u=sizeof(stUsuario);
+
             FILE *archivo3=fopen("Registro","r+b");
             if(archivo3!=NULL)
             {
@@ -669,8 +583,9 @@ char pago(stUsuario *sesion)                                        //BOTON 4
                 fclose(archivo3);
             }
             flag=0;
-            char tipo[15];
             stAdmin admin;
+            int v=sizeof(stAdmin);
+            char tipo[15];
             FILE *archivo4=fopen("Admin","r+b");
             if(archivo4!=NULL)
             {
@@ -821,11 +736,8 @@ char administradores()                                      //BOTON 2: MENU ADMI
                 system("cls");
                 color(15);
                 char clave[20];
-
-                //printf ("INGRESE LA CONTRASENA: \n");
                 claveAdmin();
-                fflush(stdin);
-                gets(clave);
+                contrasena(clave);
                 system("cls");
                 if(strcmp(admin,clave)==0)
                 {
@@ -856,10 +768,8 @@ char administradores()                                      //BOTON 2: MENU ADMI
 //INICIAR SESION
 char iniciarSesionAdmin()                                       //BOTON 3: INICIAR SESION
 {
-    color (15);
-    char boton='1';
+    char boton='1',volverString[10]="0";
     int flag=0,ronda=1;
-    char volverString[10]="0";
     stAdmin sesion,cuenta;
     //USUARIO
     while(flag!=1)
@@ -893,32 +803,7 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
     while(flag!=1)
     {
         iniciarSesionAdminPantalla2(ronda,sesion);
-        {   //ASTERISCOS CONTRASENA
-            int p=0;
-            do
-            {
-                fflush(stdin);
-                sesion.contrasena[p]=getch();
-                if(sesion.contrasena[p]!= '\r')
-                {
-                    if(sesion.contrasena[p]!='\b')
-                    {
-                        printf("*");
-                        p++;
-                    }
-                    else
-                    {
-                        if(p>0)
-                        {
-                            printf("\b \b");
-                            p--;
-                        }
-                    }
-                }
-            }
-            while(sesion.contrasena[p]!='\r');
-            sesion.contrasena[p]='\0';
-        }   //FIN ASTERISCOS
+        contrasena(sesion.contrasena);
         if(strcmp(sesion.contrasena,"0")==0||ronda>4)
         {
             boton='0';
@@ -1117,6 +1002,12 @@ char ventanasAdmin(stAdmin sesion,char boton)                   //VENTANAS ADMIN
                 boton=adminRetiro();
             }
             break;
+            case('8'):
+            {
+                system("cls");
+                boton=historialTransacciones(sesion);
+            }
+            break;
         }
     }
     while(boton!='0');
@@ -1132,7 +1023,7 @@ char estadoDeCuentaAdmin(stAdmin sesion)                            //BOTON 1
         boton=getch();
         system("cls");
     }
-    while(boton!='3' && boton!='4' && boton!='5' && boton!='6' && boton!='7' && boton!='0');
+    while(boton!='3' && boton!='4' && boton!='5' && boton!='6' && boton!='7' && boton!='8' && boton!='0');
     if(sesion.tipo!=1 && (boton=='3' || boton=='7'))
     {
         boton='1';
@@ -1142,6 +1033,10 @@ char estadoDeCuentaAdmin(stAdmin sesion)                            //BOTON 1
         boton='1';
     }
     if(sesion.tipo==1 && boton=='6')
+    {
+        boton='1';
+    }
+    if(sesion.tipo!=1 && boton=='8')
     {
         boton='1';
     }
@@ -1197,28 +1092,10 @@ char adminDeposito()                                                //BOTON 3
         }
         else
         {
-            stToken aux;
-            stUsuario alumno;
-            int t=sizeof(stToken);
-            int u=sizeof(stUsuario);
-            FILE *archivo2=fopen("Transacciones","r+b");
-            if(archivo2!=NULL)
-            {
-                //rewind(archivo2);
-                while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
-                {
-                    if(transaccion.token==aux.token)
-                    {
-                        transaccion.acreditado=1;
-                        fseek(archivo2,-t,SEEK_CUR);
-                        fwrite(&transaccion,sizeof(stToken),1,archivo2);
-                        flag=1;
-                        rewind(archivo2);
-                    }
-                }
-                fclose(archivo2);
-            }
+            acreditacionToken(transaccion);
             flag=0;
+            stUsuario alumno;
+            int u=sizeof(stUsuario);
             FILE *archivo3=fopen("Registro","r+b");
             if(archivo3!=NULL)
             {
@@ -1327,49 +1204,7 @@ char adminPago(stAdmin admin)                                       //BOTON 4
     }
     else
     {
-        int flag=0,repetido=1;
-        stToken taux;
-        srand(time(NULL));
-        FILE *archivo=fopen("Transacciones","rb");
-        if(archivo!=NULL)
-        {
-            while(repetido==1)
-            {
-                while((fread(&taux,sizeof(stToken),1,archivo)>0) && flag==0)
-                {
-                    transaccion.token=rand()%89999+10000;
-                    if(transaccion.token==taux.token)
-                    {
-                        flag=1;
-                    }
-                }
-                if(flag==0)
-                {
-                    repetido=0;
-                }
-                else
-                {
-                    flag=0;
-                }
-            }
-            fclose(archivo);
-            archivo=fopen("Transacciones","ab");
-            if(archivo!=NULL)
-            {
-                fwrite(&transaccion,sizeof(stToken),1,archivo);
-                fclose(archivo);
-            }
-        }
-        else
-        {
-            transaccion.token=rand()%89999+10000;
-            archivo=fopen("Transacciones","ab");
-            if(archivo!=NULL)
-            {
-                fwrite(&transaccion,sizeof(stToken),1,archivo);
-                fclose(archivo);
-            }
-        }
+        transaccion=generadorToken(transaccion);
         adminPagoPantalla4(transaccion,admin);
         system("cls");
     }
@@ -1487,49 +1322,7 @@ char retiroDinero(stAdmin admin)                                    //BOTON 6
     }
     else
     {
-        int flag=0,repetido=1;
-        stToken taux;
-        srand(time(NULL));
-        FILE *archivo=fopen("Transacciones","rb");
-        if(archivo!=NULL)
-        {
-            while(repetido==1)
-            {
-                while((fread(&taux,sizeof(stToken),1,archivo)>0) && flag==0)
-                {
-                    transaccion.token=rand()%89999+10000;
-                    if(transaccion.token==taux.token)
-                    {
-                        flag=1;
-                    }
-                }
-                if(flag==0)
-                {
-                    repetido=0;
-                }
-                else
-                {
-                    flag=0;
-                }
-            }
-            fclose(archivo);
-            archivo=fopen("Transacciones","ab");
-            if(archivo!=NULL)
-            {
-                fwrite(&transaccion,sizeof(stToken),1,archivo);
-                fclose(archivo);
-            }
-        }
-        else
-        {
-            transaccion.token=rand()%89999+10000;
-            archivo=fopen("Transacciones","ab");
-            if(archivo!=NULL)
-            {
-                fwrite(&transaccion,sizeof(stToken),1,archivo);
-                fclose(archivo);
-            }
-        }
+        transaccion=generadorToken(transaccion);
         retiroPantalla3(transaccion,admin);
         system("cls");
     }
@@ -1585,29 +1378,11 @@ char adminRetiro()                                                  //BOTON 7
         }
         else
         {
-            stToken aux;
+            acreditacionToken(transaccion);
+            flag=0;
             stAdmin admin;
             char tipo[15];
-            int t=sizeof(stToken);
             int v=sizeof(stAdmin);
-            FILE *archivo2=fopen("Transacciones","r+b");
-            if(archivo2!=NULL)
-            {
-                //rewind(archivo2);
-                while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
-                {
-                    if(transaccion.token==aux.token)
-                    {
-                        transaccion.acreditado=1;
-                        fseek(archivo2,-t,SEEK_CUR);
-                        fwrite(&transaccion,sizeof(stToken),1,archivo2);
-                        flag=1;
-                        rewind(archivo2);
-                    }
-                }
-                fclose(archivo2);
-            }
-            flag=0;
             FILE *archivo3=fopen("Admin","r+b");
             if(archivo3!=NULL)
             {
@@ -1652,5 +1427,170 @@ char adminRetiro()                                                  //BOTON 7
     }
     return boton;
 }
+char historialTransacciones(stAdmin sesion)                         //BOTON 8
+{
+    char boton='4';
+    int i,d=0,flag=0,ultimo=0;
+    stToken aux;
+    int t=sizeof(stToken);
+    FILE *archivo=fopen("Transacciones","rb");
+    if(archivo!=NULL)
+    {
+        do
+        {
+            if(boton=='4')
+            {
+                flag=0;
+                if(!feof(archivo))
+                {
+                    historialPantalla1();
+                }
+                d=0;
+                while(fread(&aux,sizeof(stToken),1,archivo)>0 && d<9)
+                {
+                    flag=historialPantalla2(aux,flag);
+                    d++;
+                }
+                if(d==9 && !feof(archivo))
+                {
+                    fseek(archivo,-t,SEEK_CUR);
+                }
+                if(d>0)
+                {
+                    for(i=d;i<9;i++)
+                    {
+                        flag=historialPantalla3(flag);
+                    }
+                    if(d<9)
+                    {
+                        ultimo=1;
+                    }
+                    else
+                    {
+                        ultimo=0;
+                    }
+                    historialPantalla4(ultimo);
+                }
+            }
+            do
+            {
+                fflush(stdin);
+                boton=getch();
+            }
+            while(boton!='4' && boton!='0');
+            if(d<9 || feof(archivo))
+            {
+                rewind(archivo);
+            }
+            system("cls");
+        }
+        while(boton!='0');
+        fclose(archivo);
+    }
+    boton='1';
+    return boton;
+}
+//UNIVERSAL
+void contrasena(char cont[30])                                  //ASTERISCOS
+{
+    int p=0;
+    do
+    {
+        fflush(stdin);
+        cont[p]=getch();
+        if(cont[p]!= '\r')
+        {
+            if(cont[p]!='\b')
+            {
+                printf("*");
+                p++;
+            }
+            else
+            {
+                if(p>0)
+                {
+                    printf("\b \b");
+                    p--;
+                }
+            }
+        }
+    }
+    while(cont[p]!='\r');
+    cont[p]='\0';
+}
+stToken generadorToken(stToken transaccion)                     //TOKEN
+{
+    int flag=0,repetido=1;
+    stToken taux;
+    srand(time(NULL));
+    FILE *archivo=fopen("Transacciones","r+b");
+    //FILE *archivo=fopen("Transacciones","rb");
+    if(archivo!=NULL)
+    {
+        fseek(archivo,0,SEEK_SET);
+        while(repetido==1)
+        {
+            while((fread(&taux,sizeof(stToken),1,archivo)>0) && flag==0)
+            {
+                transaccion.token=rand()%89999+10000;
+                if(transaccion.token==taux.token)
+                {
+                    flag=1;
+                }
+            }
+            if(flag==0)
+            {
+                repetido=0;
+            }
+            else
+            {
+                flag=0;
+            }
+        }
+        fseek(archivo,0,SEEK_END);
+        fwrite(&transaccion,sizeof(stToken),1,archivo);
+        fclose(archivo);
+        //MOSTRAR A LOS CHICOS
+        //fclose(archivo);
+        //archivo=fopen("Transacciones","ab");
+        //if(archivo!=NULL)
+        //{
+        //    fwrite(&transaccion,sizeof(stToken),1,archivo);
+        //    fclose(archivo);
+        //}
+    }
+    else
+    {
+        transaccion.token=rand()%89999+10000;
+        archivo=fopen("Transacciones","ab");
+        if(archivo!=NULL)
+        {
+            fwrite(&transaccion,sizeof(stToken),1,archivo);
+            fclose(archivo);
+        }
+    }
+    return transaccion;
+}
+void acreditacionToken(stToken transaccion)                     //ACREDITACION DEL TOKEN
+{
+    stToken aux;
+    int flag=0,t=sizeof(stToken);
+    FILE *archivo2=fopen("Transacciones","r+b");
+    if(archivo2!=NULL)
+    {
+        //rewind(archivo2);
+        while((fread(&aux,sizeof(stToken),1,archivo2)>0) && flag==0)
+        {
+            if(transaccion.token==aux.token)
+            {
+                transaccion.acreditado=1;
+                fseek(archivo2,-t,SEEK_CUR);
+                fwrite(&transaccion,sizeof(stToken),1,archivo2);
+                flag=1;
+                rewind(archivo2);
+            }
+        }
+        fclose(archivo2);
+    }
+}
 //FIN
-
