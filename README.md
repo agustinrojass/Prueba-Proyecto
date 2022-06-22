@@ -45,7 +45,7 @@ typedef struct  //STRUCT USUARIO
 {
     char nombre[20];
     int dni;
-    int edad;
+    int estado;
     stFecha nacimiento;
     char usuario[20];
     char contrasena[20];
