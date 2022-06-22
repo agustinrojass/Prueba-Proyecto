@@ -1,32 +1,21 @@
 # UTN WALLET
-
 Wallet virtual de la UTN para poder pagar el buffet, la fotocopiadora y la cuota de la carrera.
 
 ## Creado por
-
 - Agustin Rojas
 - Gonzalo Marsala
 - Francisco Ugalde
 - Zeus Testa
 
 ## Progreso semanal
-
 | Semana | Progreso |
 | - | - |
-<<<<<<< HEAD
 | Semana 1 | Funciones de creación de cuenta e inicio de sesión, menus de navegación. | 
 | Semana 2 | Funciones de muestra "pantallas", estado de cuenta, datos personales, generación de token. |
 | Semana 3 | Funciones de modificación de datos, acreditación, historiales, listas. |
 | Semana 4 | Más funciones de muestra "pantallas", asteriscos para las contraseñas, modularización, alta y baja del alumno. |
-=======
-| Semana 1 | Funciones de creación de cuenta e inicio de sesión, menus de navegación | 
-| Semana 2 | Funciones de muestra "pantallas", estado de cuenta, datos personales, generación de token |
-| Semana 3 | Funciones de modificación de datos, acreditación, historiales, listas |
-| Semana 4 | Más funciones de muestra "pantallas", asteriscos para las contraseñas, modularización |
->>>>>>> 388ee6bd8516bc02ca1b4e8dd6f343ac5af3f152
 
 ## Referencia de colores
-
 | Color  |  Imagen | Hex |
 | - | - | - |
 | Azul | ![#0037da](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Azul.png) | #0037da |
@@ -37,21 +26,14 @@ Wallet virtual de la UTN para poder pagar el buffet, la fotocopiadora y la cuota
 | Verde | ![#13a10e](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Verde.png) | #13a10e |
 
 ## Vista de la aplicación
-
 ### Inicio
-
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Inicio.png)
-
 ### Estado de cuenta
-
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Estado%20de%20cuenta%20alumno.png)
-
 ### Historial de transacciones
-
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Historial%20transacciones%20del%20alumno.png)
 
 ## Estructuras
-
 ```c
 typedef struct  //STRUCT FECHA
 {
@@ -88,14 +70,4 @@ typedef struct  //STRUCT TOKEN
     stFecha fecha;
     int acreditado;
 } stToken;
-<<<<<<< HEAD
 ```
-=======
-```
-
-
-
-
-
-
->>>>>>> 388ee6bd8516bc02ca1b4e8dd6f343ac5af3f152
