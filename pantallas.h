@@ -80,7 +80,7 @@ void adminDepositoPantalla1();                                                  
 void adminDepositoPantalla2(int token);                                             //PANTALLA DEPOSITO QUE MUESTRA TOKEN
 void adminDepositoPantalla3(stToken taux);                                          //PANTALLA DEPOSITO CONFIRMAR/CANCELAR
 void adminDepositoPantalla4(int token);                                             //PANTALLA DEPOSITO TOKEN NO ENCONTRADO
-void adminPagoPantalla1(int ronda,stAdmin sesion);                                  //PANTALLA PAGO QUE PIDE DOCUMENTO
+void adminPagoPantalla1(int ronda,int acceso,stAdmin sesion);                       //PANTALLA PAGO QUE PIDE DOCUMENTO
 void adminPagoPantalla2(int ronda,stAdmin sesion);                                  //PANTALLA PAGO QUE PIDE MONTO
 void adminPagoPantalla3(stToken transaccion,stAdmin sesion);                        //PANTALLA PAGO QUE PIDE CONFIRMAR/CANCELAR
 void adminPagoPantalla4(stToken transaccion,stAdmin sesion);                        //PANTALLA PAGO QUE MUESTRA TOKEN

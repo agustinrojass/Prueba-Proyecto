@@ -7,7 +7,7 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.18
+//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.19
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ALUMNOS
 void alumnos();                                             //BOTON 1: MENU ALUMNOS
@@ -1017,12 +1017,23 @@ char ventanasAdmin(stAdmin sesion,char boton)                   //VENTANAS ADMIN
             break;
             case('9'):
             {
-                int dni;
-                color(15);
-                printf("Ingrese el documento: ");
-                scanf("%i",&dni);
-                system("cls");
-                boton=busquedaUsuario(dni);
+                int dni,ronda=1,acceso=1;
+                do
+                {
+                    adminPagoPantalla1(ronda,acceso,sesion);
+                    scanf("%i",&dni);
+                    system("cls");
+                    if(dni==0)
+                    {
+                        boton='1';
+                    }
+                    else
+                    {
+                        boton=busquedaUsuario(dni);
+                    }
+                    ronda++;
+                }
+                while(boton!='1');
             }
             break;
         }
@@ -1146,7 +1157,7 @@ char adminPago(stAdmin admin)                                       //BOTON 4
 {
     stFecha fecha=fechaActual();
     char boton;
-    int ronda=1,existe=0;
+    int ronda=1,existe=0,acceso=2;
     stToken transaccion;
     stUsuario aux;
     color(15);
@@ -1155,7 +1166,7 @@ char adminPago(stAdmin admin)                                       //BOTON 4
     {
         do
         {
-            adminPagoPantalla1(ronda,admin);
+            adminPagoPantalla1(ronda,acceso,admin);
             scanf("%i",&transaccion.dni);
             if(transaccion.dni==0)
             {

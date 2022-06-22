@@ -10974,7 +10974,7 @@ void adminDepositoPantalla4(int token)                                          
     }
     sleep(2);
 }
-void adminPagoPantalla1(int ronda,stAdmin sesion)                                   //PANTALLA PAGO QUE PIDE DOCUMENTO
+void adminPagoPantalla1(int ronda,int acceso,stAdmin sesion)                        //PANTALLA PAGO QUE PIDE DOCUMENTO
 {
     {   //CABECERA 1
         color(159);
@@ -11040,10 +11040,20 @@ void adminPagoPantalla1(int ronda,stAdmin sesion)                               
         printf(".\n");
     }
     {   //SUBCABECERA 7
-        color(128);
-        printf(" COBRAR                                                                                           ");
-        color(0);
-        printf(".\n");
+        if(acceso==1)
+        {
+            color(128);
+            printf(" BUSCAR ALUMNO                                                                                    ");
+            color(0);
+            printf(".\n");
+        }
+        else
+        {
+            color(128);
+            printf(" COBRAR                                                                                           ");
+            color(0);
+            printf(".\n");
+        }
     }
     {   //SUBCABECERA 8
         color(128);
