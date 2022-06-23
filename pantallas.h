@@ -36,6 +36,7 @@ typedef struct  //STRUCT TOKEN
 } stToken;
 //COLORES
 int color(int num);
+//COORDENADAS
 void gotoxy(int X,int Y);
 //FECHA
 stFecha fechaActual();

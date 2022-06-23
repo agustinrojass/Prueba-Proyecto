@@ -1953,23 +1953,40 @@ void crearCuentaAlumnoPantalla2(int ronda,stUsuario datos)                      
         printf(".\n");
     }
     {   //LINEA 9
-        if(ronda==1)
+        switch(ronda)
         {
-            color(249);
-            printf("                                                                                                  ");
-            color(0);
-            printf(".\n");
-        }
-        else
-        {
-            color(249);
-            printf(" ");
-            color(79);
-            printf(" ESE NUMERO DE DOCUMENTO YA ESTA REGISTRADO ");
-            color(249);
-            printf("                                                     ");
-            color(0);
-            printf(".\n");
+            case(1):
+            {
+                color(249);
+                printf("                                                                                                  ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+            case(2):
+            {
+                color(249);
+                printf(" ");
+                color(79);
+                printf(" ESE NUMERO DE DOCUMENTO YA ESTA REGISTRADO ");
+                color(249);
+                printf("                                                     ");
+                color(0);
+                printf(".\n");
+            }
+            break;
+            case(3):
+            {
+                color(249);
+                printf(" ");
+                color(79);
+                printf(" INGRESE UN NUMERO DE DOCUMENTO VALIDO ");
+                color(249);
+                printf("                                                          ");
+                color(0);
+                printf(".\n");
+            }
+            break;
         }
     }
     {   //SUBCABECERA 10

@@ -5,9 +5,10 @@
 #include <windows.h>
 #include <unistd.h>
 #include <time.h>
+#include <math.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.24
+//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.25
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ALUMNOS
 void alumnos();                                             //BOTON 1: MENU ALUMNOS
@@ -39,8 +40,9 @@ char adminRetiro();                                                 //BOTON 7
 char historialTransacciones(stAdmin sesion);                        //BOTON 8
 char busquedaUsuario(int dni);                                      //BOTON 9
 //UNIVERSAL
-void usuario(char user[20]);
+void usuario(char user[20]);                                    //PALABRAS
 void contrasena(char cont[20]);                                 //ASTERISCOS
+int stringNumero(char aux[],int *letra,int *ronda);             //NUMEROS
 stToken generadorToken(stToken transaccion);                    //TOKEN
 void acreditacionToken(stToken transaccion);                    //ACREDITACION DEL TOKEN
 //MAIN
@@ -191,7 +193,7 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
 {
     stFecha fecha=fechaActual();
     stUsuario datos,datosAux;
-    char boton='2';
+    char boton='2',aux[]={};
     int ronda=1,repetido=1,flag=0;
     //ESTADO
     datos.estado=1;
@@ -210,21 +212,36 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
     }
     system("cls");
     //DOCUMENTO
+    int letra=0;
     while(repetido==1)
     {
         do
         {
-            crearCuentaAlumnoPantalla2(ronda,datos);
-            color(128);
-            gotoxy(30,9);
-            scanf("%i",&datos.dni);
-            color(0);
+            do
+            {
+                letra=0;
+                crearCuentaAlumnoPantalla2(ronda,datos);
+                color(128);
+                gotoxy(30,9);
+                usuario(aux);
+                //scanf("%i",&datos.dni);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(aux,&letra,&ronda);
+                datos.dni=n;
+            }
+            while(letra!=0);
             if(datos.dni==0)
             {
                 boton='0';
                 return boton;
             }
             system("cls");
+            if(datos.dni<1000000 || datos.dni>99999999)
+            {
+                ronda=3;
+            }
         }
         while(datos.dni<1000000 || datos.dni>99999999);
         FILE *archivoUsuarios=fopen("Registro","rb");
@@ -235,6 +252,7 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
                 if(datos.dni==datosAux.dni)
                 {
                     flag=1;
+                    ronda=2;
                 }
             }
             fclose(archivoUsuarios);
@@ -247,7 +265,7 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
         {
             flag=0;
         }
-        ronda++;
+        //ronda++;
         system("cls");
     }
     //NACIMIENTO
@@ -257,11 +275,21 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
         ronda=1;
         do
         {
-            crearCuentaAlumnoPantalla3(ronda,1,datos);
-            color(128);
-            gotoxy(39,12);
-            scanf("%i",&datos.nacimiento.dia);
-            color(0);
+            do
+            {
+                letra=0;
+                crearCuentaAlumnoPantalla3(ronda,1,datos);
+                color(128);
+                gotoxy(39,12);
+                usuario(aux);
+                //scanf("%i",&datos.nacimiento.dia);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(aux,&letra,&ronda);
+                datos.nacimiento.dia=n;
+            }
+            while(letra!=0);
             if(datos.nacimiento.dia==0)
             {
                 boton='0';
@@ -274,11 +302,27 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
         ronda=1;
         do
         {
-            crearCuentaAlumnoPantalla3(ronda,2,datos);
-            color(128);
-            gotoxy(39,12);
-            scanf("%i",&datos.nacimiento.mes);
-            color(0);
+            //crearCuentaAlumnoPantalla3(ronda,2,datos);
+            //color(128);
+            //gotoxy(39,12);
+            //scanf("%i",&datos.nacimiento.mes);
+            //color(0);
+            do
+            {
+                letra=0;
+                crearCuentaAlumnoPantalla3(ronda,2,datos);
+                color(128);
+                gotoxy(39,12);
+                usuario(aux);
+                //scanf("%i",&datos.nacimiento.mes);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(aux,&letra,&ronda);
+                datos.nacimiento.mes=n;
+            }
+            while(letra!=0);
+
             if(datos.nacimiento.mes==0)
             {
                 boton='0';
@@ -291,11 +335,21 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
         ronda=1;
         do
         {
-            crearCuentaAlumnoPantalla3(ronda,3,datos);
-            color(128);
-            gotoxy(39,12);
-            scanf("%i",&datos.nacimiento.ano);
-            color(0);
+            do
+            {
+                letra=0;
+                crearCuentaAlumnoPantalla3(ronda,3,datos);
+                color(128);
+                gotoxy(39,12);
+                usuario(aux);
+                //scanf("%i",&datos.nacimiento.ano);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(aux,&letra,&ronda);
+                datos.nacimiento.ano=n;
+            }
+            while(letra!=0);
             if(datos.nacimiento.ano==0)
             {
                 boton='0';
@@ -501,8 +555,8 @@ char datosPersonales(stUsuario sesion)                              //BOTON 2
 char deposito(stUsuario aux)                                        //BOTON 3
 {
     stFecha fecha=fechaActual();
-    char boton;
-    int ronda=1;
+    char boton,auxiliar[]={};
+    int ronda=1,letra=0;
     stToken transaccion;
     transaccion.dni=aux.dni;
     strcpy(transaccion.origen,"UTN");
@@ -512,15 +566,29 @@ char deposito(stUsuario aux)                                        //BOTON 3
     transaccion.acreditado=0;
     do
     {
-        depositoPantalla1(ronda);
-        color(128);
-        gotoxy(10,9);
-        scanf("%f",&transaccion.monto);
-        color(0);
-        system("cls");
+        do
+        {
+            letra=0;
+            depositoPantalla1(ronda);
+            color(128);
+            gotoxy(10,9);
+            usuario(auxiliar);
+            //scanf("%f",&transaccion.monto);
+            color(0);
+            system("cls");
+            int n;
+            n=stringNumero(auxiliar,&letra,&ronda);
+            transaccion.monto=n;
+        }
+        while(letra!=0);
         ronda++;
     }
-    while(transaccion.monto<=0);
+    while(transaccion.monto<0);
+    if(transaccion.monto==0)
+    {
+        boton='1';
+        return boton;
+    }
     do
     {
         depositoPantalla2(transaccion);
@@ -544,21 +612,30 @@ char deposito(stUsuario aux)                                        //BOTON 3
 }
 char pago(stUsuario *sesion)                                        //BOTON 4
 {
-    char boton;
+    char boton,auxiliar[]={};
     stToken transaccion;
     stToken to;
-    int token,flag=0;
+    int token,flag=0,letra=0,ronda=1;
     FILE *archivo=fopen("Transacciones","rb");
     if(archivo!=NULL)
     {
         do
         {
-            pagoPantalla1();
-            color(128);
-            gotoxy(19,9);
-            scanf("%i",&token);
-            color(0);
-            system("cls");
+            do
+            {
+                letra=0;
+                pagoPantalla1();
+                color(128);
+                gotoxy(19,9);
+                usuario(auxiliar);
+                //scanf("%i",&token);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(auxiliar,&letra,&ronda);
+                token=n;
+            }
+            while(letra!=0);
         }
         while(token<0 || (token>0 && token<10000));
         if(token==0)
@@ -1055,11 +1132,25 @@ char ventanasAdmin(stAdmin sesion,char boton)                   //VENTANAS ADMIN
             case('9'):
             {
                 int dni,ronda=1,acceso=1;
+                char auxiliar[]={};
                 do
                 {
-                    adminPagoPantalla1(ronda,acceso,sesion);
-                    scanf("%i",&dni);
-                    system("cls");
+                    int letra=0;
+                    do
+                    {
+                        letra=0;
+                        adminPagoPantalla1(ronda,acceso,sesion);
+                        color(128);
+                        gotoxy(12,9);
+                        usuario(auxiliar);
+                        //scanf("%i",&.dni);
+                        color(0);
+                        system("cls");
+                        int n;
+                        n=stringNumero(auxiliar,&letra,&ronda);
+                        dni=n;
+                    }
+                    while(letra!=0);
                     if(dni==0)
                     {
                         boton='1';
@@ -1113,21 +1204,30 @@ char estadoDeCuentaAdmin(stAdmin sesion)                            //BOTON 1
 }
 char adminDeposito()                                                //BOTON 3
 {
-    char boton;
+    char boton,auxiliar[]={};
     stToken transaccion;
     stToken to;
-    int token,flag=0;
+    int token,flag=0,letra=0,ronda=1;
     FILE *archivo=fopen("Transacciones","rb");
     if(archivo!=NULL)
     {
         do
         {
-            adminDepositoPantalla1();
-            color(128);
-            gotoxy(19,9);
-            scanf("%i",&token);
-            color(0);
-            system("cls");
+            do
+            {
+                letra=0;
+                adminDepositoPantalla1();
+                color(128);
+                gotoxy(19,9);
+                usuario(auxiliar);
+                //scanf("%i",&token);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(auxiliar,&letra,&ronda);
+                token=n;
+            }
+            while(letra!=0);
         }
         while(token<0 || (token>0 && token<10000));
         if(token==0)
@@ -1196,8 +1296,8 @@ char adminDeposito()                                                //BOTON 3
 char adminPago(stAdmin admin)                                       //BOTON 4
 {
     stFecha fecha=fechaActual();
-    char boton;
-    int ronda=1,existe=0,acceso=2;
+    char boton,auxiliar[]={};
+    int ronda=1,existe=0,acceso=2,letra=0;
     stToken transaccion;
     stUsuario aux;
     color(15);
@@ -1206,11 +1306,21 @@ char adminPago(stAdmin admin)                                       //BOTON 4
     {
         do
         {
-            adminPagoPantalla1(ronda,acceso,admin);
-            color(128);
-            gotoxy(12,9);
-            scanf("%i",&transaccion.dni);
-            color(0);
+            do
+            {
+                letra=0;
+                adminPagoPantalla1(ronda,acceso,admin);
+                color(128);
+                gotoxy(12,9);
+                usuario(auxiliar);
+                //scanf("%i",&transaccion.dni);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(auxiliar,&letra,&ronda);
+                transaccion.dni=n;
+            }
+            while(letra!=0);
             if(transaccion.dni==0)
             {
                 boton='1';
@@ -1257,15 +1367,29 @@ char adminPago(stAdmin admin)                                       //BOTON 4
     ronda=1;
     do
     {
-        adminPagoPantalla2(ronda,admin);
-        color(128);
-        gotoxy(10,9);
-        scanf("%f",&transaccion.monto);
-        color(0);
-        system("cls");
+        do
+        {
+            letra=0;
+            adminPagoPantalla2(ronda,admin);
+            color(128);
+            gotoxy(10,9);
+            usuario(auxiliar);
+            //scanf("%f",&transaccion.monto);
+            color(0);
+            system("cls");
+            int n;
+            n=stringNumero(auxiliar,&letra,&ronda);
+            transaccion.monto=n;
+        }
+        while(letra!=0);
         ronda++;
     }
-    while(transaccion.monto<=0);
+    while(transaccion.monto<0);
+    if(transaccion.monto==0)
+    {
+        boton='1';
+        return boton;
+    }
     do
     {
         adminPagoPantalla3(transaccion,admin);
@@ -1353,8 +1477,8 @@ char listaUsuarios()                                                //BOTON 5
 char retiroDinero(stAdmin admin)                                    //BOTON 6
 {
     stFecha fecha=fechaActual();
-    char boton;
-    int ronda=1;
+    char boton,auxiliar[]={};
+    int ronda=1,letra=0;
     stToken transaccion;
     switch(admin.tipo)
     {
@@ -1378,15 +1502,29 @@ char retiroDinero(stAdmin admin)                                    //BOTON 6
     ronda=1;
     do
     {
-        retiroPantalla1(ronda,admin);
-        color(128);
-        gotoxy(10,9);
-        scanf("%f",&transaccion.monto);
-        color(0);
-        system("cls");
+        do
+        {
+            letra=0;
+            retiroPantalla1(ronda,admin);
+            color(128);
+            gotoxy(10,9);
+            usuario(auxiliar);
+            //scanf("%f",&transaccion.monto);
+            color(0);
+            system("cls");
+            int n;
+            n=stringNumero(auxiliar,&letra,&ronda);
+            transaccion.monto=n;
+        }
+        while(letra!=0);
         ronda++;
     }
-    while((transaccion.monto<=0 || transaccion.monto>50000) && transaccion.monto<=admin.saldo);
+    while((transaccion.monto<0 || transaccion.monto>50000) || transaccion.monto>=admin.saldo);
+    if(transaccion.monto==0)
+    {
+        boton='1';
+        return boton;
+    }
     do
     {
         retiroPantalla2(transaccion,admin);
@@ -1410,21 +1548,30 @@ char retiroDinero(stAdmin admin)                                    //BOTON 6
 }
 char adminRetiro()                                                  //BOTON 7
 {
-    char boton;
+    char boton,auxiliar[]={};
     stToken transaccion;
     stToken to;
-    int token,flag=0;
+    int token,flag=0,letra=0,ronda=1;
     FILE *archivo=fopen("Transacciones","rb");
     if(archivo!=NULL)
     {
         do
         {
-            adminRetiroPantalla1();
-            color(128);
-            gotoxy(19,9);
-            scanf("%i",&token);
-            color(0);
-            system("cls");
+            do
+            {
+                letra=0;
+                adminRetiroPantalla1();
+                color(128);
+                gotoxy(19,9);
+                usuario(auxiliar);
+                //scanf("%i",&token);
+                color(0);
+                system("cls");
+                int n;
+                n=stringNumero(auxiliar,&letra,&ronda);
+                token=n;
+            }
+            while(letra!=0);
         }
         while(token<0 || (token>0 && token<10000));
         if(token==0)
@@ -1639,7 +1786,7 @@ char busquedaUsuario(int dni)                                       //BOTON 9
     return boton;
 }
 //UNIVERSAL
-void usuario(char user[20])                                     //USUARIO
+void usuario(char user[20])                                     //PALABRAS
 {
     int p=0;
     do
@@ -1716,6 +1863,24 @@ void contrasena(char cont[20])                                  //ASTERISCOS
     }
     while(p<22 && cont[p]!='\r');
     cont[p]='\0';
+}
+int stringNumero(char aux[],int *letra,int *ronda)              //NUMEROS
+{
+    int z,n=0;
+    for(z=0;z<strlen(aux) && *letra==0;z++)
+    {
+        if(isdigit(aux[z])!=1)
+        {
+            *letra=1;
+            n=1;
+            *ronda=3;
+        }
+        else
+        {
+            n=n+(aux[z]-48)*pow(10,strlen(aux)-z-1);
+        }
+    }
+    return n;
 }
 stToken generadorToken(stToken transaccion)                     //TOKEN
 {
