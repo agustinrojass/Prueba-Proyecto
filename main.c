@@ -7,7 +7,7 @@
 #include <time.h>
 #include "pantallas.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.23
+//UTN WALLET (AGUSTIN ROJAS - FRANCISCO PEREZ - GONZALO MARSALA - ZEUS TESTA): VERSION 1.24
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ALUMNOS
 void alumnos();                                             //BOTON 1: MENU ALUMNOS
@@ -39,7 +39,8 @@ char adminRetiro();                                                 //BOTON 7
 char historialTransacciones(stAdmin sesion);                        //BOTON 8
 char busquedaUsuario(int dni);                                      //BOTON 9
 //UNIVERSAL
-void contrasena(char cont[30]);                                 //ASTERISCOS
+void usuario(char user[20]);
+void contrasena(char cont[20]);                                 //ASTERISCOS
 stToken generadorToken(stToken transaccion);                    //TOKEN
 void acreditacionToken(stToken transaccion);                    //ACREDITACION DEL TOKEN
 //MAIN
@@ -120,8 +121,11 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
     while(flag!=1)
     {
         iniciarSesionPantalla1(ronda,acceso);
-        fflush(stdin);
-        gets(sesion.usuario);
+        color(128);
+        gotoxy(20,6);
+        //gets(sesion.usuario);
+        usuario(sesion.usuario);
+        color(0);
         if(strcmp(sesion.usuario,"0")==0)
         {
             boton='0';
@@ -149,7 +153,10 @@ char iniciarSesionAlumno()                                      //BOTON 3: INICI
     while(flag!=1)
     {
         iniciarSesionPantalla2(ronda,acceso,sesion,admin);
+        color(128);
+        gotoxy(13,9);
         contrasena(sesion.contrasena);
+        color(0);
         if((strcmp(sesion.contrasena,"0")==0)||ronda>4)
         {
             boton='0';
@@ -190,8 +197,12 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
     datos.estado=1;
     //NOMBRE
     crearCuentaAlumnoPantalla1();
-    fflush(stdin);
-    gets(datos.nombre);
+    color(128);
+    gotoxy(28,6);
+    //fflush(stdin);
+    //gets(datos.nombre);
+    usuario(datos.nombre);
+    color(0);
     if(strcmp(datos.nombre,"0")==0)
     {
         boton='0';
@@ -201,13 +212,21 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
     //DOCUMENTO
     while(repetido==1)
     {
-        crearCuentaAlumnoPantalla2(ronda,datos);
-        scanf("%i",&datos.dni);
-        if(datos.dni==0)
+        do
         {
-            boton='0';
-            return boton;
+            crearCuentaAlumnoPantalla2(ronda,datos);
+            color(128);
+            gotoxy(30,9);
+            scanf("%i",&datos.dni);
+            color(0);
+            if(datos.dni==0)
+            {
+                boton='0';
+                return boton;
+            }
+            system("cls");
         }
+        while(datos.dni<1000000 || datos.dni>99999999);
         FILE *archivoUsuarios=fopen("Registro","rb");
         if(archivoUsuarios!=NULL)
         {
@@ -239,7 +258,10 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
         do
         {
             crearCuentaAlumnoPantalla3(ronda,1,datos);
+            color(128);
+            gotoxy(39,12);
             scanf("%i",&datos.nacimiento.dia);
+            color(0);
             if(datos.nacimiento.dia==0)
             {
                 boton='0';
@@ -253,7 +275,10 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
         do
         {
             crearCuentaAlumnoPantalla3(ronda,2,datos);
+            color(128);
+            gotoxy(39,12);
             scanf("%i",&datos.nacimiento.mes);
+            color(0);
             if(datos.nacimiento.mes==0)
             {
                 boton='0';
@@ -267,7 +292,10 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
         do
         {
             crearCuentaAlumnoPantalla3(ronda,3,datos);
+            color(128);
+            gotoxy(39,12);
             scanf("%i",&datos.nacimiento.ano);
+            color(0);
             if(datos.nacimiento.ano==0)
             {
                 boton='0';
@@ -306,8 +334,12 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
     while(repetido==1)
     {
         crearCuentaAlumnoPantalla4(ronda,datos);
-        fflush(stdin);
-        gets(datos.usuario);
+        color(128);
+        gotoxy(28,15);
+        //fflush(stdin);
+        //gets(datos.usuario);
+        usuario(datos.usuario);
+        color(0);
         if(strcmp(datos.usuario,"0")==0)
         {
             boton='0';
@@ -338,11 +370,15 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
     }
     //CONTRASENA
     ronda=1;
-    while(strlen(datos.contrasena)<8)
+    while(strlen(datos.contrasena)<8 || strlen(datos.contrasena)>20)
     {
         crearCuentaAlumnoPantalla5(ronda,datos);
-        fflush(stdin);
-        gets(datos.contrasena);
+        //fflush(stdin);
+        //gets(datos.contrasena);
+        color(128);
+        gotoxy(25,18);
+        usuario(datos.contrasena);
+        color(0);
         if(strcmp(datos.contrasena,"0")==0)
         {
             boton='0';
@@ -356,8 +392,12 @@ char crearCuentaAlumno()                                        //BOTON 4: CREAR
     do
     {
         crearCuentaAlumnoPantalla6(ronda,datos);
-        fflush(stdin);
-        gets(datosAux.contrasena);
+        //fflush(stdin);
+        //gets(datosAux.contrasena);
+        color(128);
+        gotoxy(34,21);
+        usuario(datosAux.contrasena);
+        color(0);
         if(strcmp(datosAux.contrasena,"0")==0)
         {
             boton='0';
@@ -473,7 +513,10 @@ char deposito(stUsuario aux)                                        //BOTON 3
     do
     {
         depositoPantalla1(ronda);
+        color(128);
+        gotoxy(10,9);
         scanf("%f",&transaccion.monto);
+        color(0);
         system("cls");
         ronda++;
     }
@@ -511,7 +554,10 @@ char pago(stUsuario *sesion)                                        //BOTON 4
         do
         {
             pagoPantalla1();
+            color(128);
+            gotoxy(19,9);
             scanf("%i",&token);
+            color(0);
             system("cls");
         }
         while(token<0 || (token>0 && token<10000));
@@ -659,7 +705,7 @@ char historial(stUsuario sesion)                                    //BOTON 5
                 {
                     fseek(archivo,-t,SEEK_CUR);
                 }
-                if(d>0)
+                if(d>=0)
                 {
                     for(i=d;i<9;i++)
                     {
@@ -725,7 +771,10 @@ char administradores()                                      //BOTON 2: MENU ADMI
                 color(15);
                 char clave[20];
                 claveAdmin();
+                color(128);
+                gotoxy(25,6);
                 contrasena(clave);
+                color(0);
                 system("cls");
                 if(strcmp(admin,clave)==0)
                 {
@@ -759,13 +808,17 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
     char boton='1',volverString[10]="0";
     int flag=0,ronda=1,acceso=1;
     stAdmin sesion,cuenta,aux;
-    stUsuario usuario;
+    stUsuario alumno;
     //USUARIO
     while(flag!=1)
     {
         iniciarSesionPantalla1(ronda,acceso);
         fflush(stdin);
-        gets(sesion.usuario);
+        //gets(sesion.usuario);
+        color(128);
+        gotoxy(20,6);
+        usuario(sesion.usuario);
+        color(0);
         if(strcmp(sesion.usuario,volverString)==0)
         {
             boton='0';
@@ -792,8 +845,11 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
     ronda=1;
     while(flag!=1)
     {
-        iniciarSesionPantalla2(ronda,acceso,usuario,sesion);
+        iniciarSesionPantalla2(ronda,acceso,alumno,sesion);
+        color(128);
+        gotoxy(13,9);
         contrasena(sesion.contrasena);
+        color(0);
         if(strcmp(sesion.contrasena,"0")==0||ronda>4)
         {
             boton='0';
@@ -809,7 +865,7 @@ char iniciarSesionAdmin()                                       //BOTON 3: INICI
     //INICIANDO
     do
     {
-        iniciarSesionPantalla3(acceso,usuario,sesion);
+        iniciarSesionPantalla3(acceso,alumno,sesion);
         fflush(stdin);
         boton=getch();
         system("cls");
@@ -834,8 +890,12 @@ char crearCuentaAdmin(int tipo)                                 //BOTON 4: CREAR
     system("cls");
     //NOMBRE
     crearCuentaAdminPantalla1(datos);
-    fflush(stdin);
-    gets(datos.nombre);
+    color(128);
+    gotoxy(28,6);
+    //fflush(stdin);
+    //gets(datos.nombre);
+    usuario(datos.nombre);
+    color(0);
     if(strcmp(datos.nombre,"0")==0)
     {
         boton='0';
@@ -849,8 +909,12 @@ char crearCuentaAdmin(int tipo)                                 //BOTON 4: CREAR
     while(repetido==1)
     {
         crearCuentaAdminPantalla2(ronda,datos);
-        fflush(stdin);
-        gets(datos.usuario);
+        color(128);
+        gotoxy(28,9);
+        //fflush(stdin);
+        //gets(datos.usuario);
+        usuario(datos.usuario);
+        color(0);
         if(strcmp(datos.usuario,"0")==0)
         {
             boton='0';
@@ -884,8 +948,12 @@ char crearCuentaAdmin(int tipo)                                 //BOTON 4: CREAR
     while(strlen(datos.contrasena)<8)
     {
         crearCuentaAdminPantalla3(ronda,datos);
-        fflush(stdin);
-        gets(datos.contrasena);
+        color(128);
+        gotoxy(25,12);
+        //fflush(stdin);
+        //gets(datos.contrasena);
+        usuario(datos.contrasena);
+        color(0);
         if(strcmp(datos.contrasena,"0")==0)
         {
             boton='0';
@@ -899,8 +967,12 @@ char crearCuentaAdmin(int tipo)                                 //BOTON 4: CREAR
     do
     {
         crearCuentaAdminPantalla4(ronda,datos);
-        fflush(stdin);
-        gets(datosAux.contrasena);
+        color(128);
+        gotoxy(34,15);
+        //fflush(stdin);
+        //gets(datosAux.contrasena);
+        usuario(datosAux.contrasena);
+        color(0);
         if(strcmp(datosAux.contrasena,"0")==0)
         {
             boton='0';
@@ -1051,7 +1123,10 @@ char adminDeposito()                                                //BOTON 3
         do
         {
             adminDepositoPantalla1();
+            color(128);
+            gotoxy(19,9);
             scanf("%i",&token);
+            color(0);
             system("cls");
         }
         while(token<0 || (token>0 && token<10000));
@@ -1132,7 +1207,10 @@ char adminPago(stAdmin admin)                                       //BOTON 4
         do
         {
             adminPagoPantalla1(ronda,acceso,admin);
+            color(128);
+            gotoxy(12,9);
             scanf("%i",&transaccion.dni);
+            color(0);
             if(transaccion.dni==0)
             {
                 boton='1';
@@ -1180,7 +1258,10 @@ char adminPago(stAdmin admin)                                       //BOTON 4
     do
     {
         adminPagoPantalla2(ronda,admin);
+        color(128);
+        gotoxy(10,9);
         scanf("%f",&transaccion.monto);
+        color(0);
         system("cls");
         ronda++;
     }
@@ -1298,7 +1379,10 @@ char retiroDinero(stAdmin admin)                                    //BOTON 6
     do
     {
         retiroPantalla1(ronda,admin);
+        color(128);
+        gotoxy(10,9);
         scanf("%f",&transaccion.monto);
+        color(0);
         system("cls");
         ronda++;
     }
@@ -1336,7 +1420,10 @@ char adminRetiro()                                                  //BOTON 7
         do
         {
             adminRetiroPantalla1();
+            color(128);
+            gotoxy(19,9);
             scanf("%i",&token);
+            color(0);
             system("cls");
         }
         while(token<0 || (token>0 && token<10000));
@@ -1552,13 +1639,64 @@ char busquedaUsuario(int dni)                                       //BOTON 9
     return boton;
 }
 //UNIVERSAL
-void contrasena(char cont[30])                                  //ASTERISCOS
+void usuario(char user[20])                                     //USUARIO
 {
     int p=0;
     do
     {
-        fflush(stdin);
-        cont[p]=getch();
+        if(p==20)
+        {
+            do
+            {
+                fflush(stdin);
+                user[p]=getch();
+            }
+            while(user[p]!='\b' && user[p]!='\r');
+        }
+        else
+        {
+            fflush(stdin);
+            user[p]=getch();
+        }
+        if(user[p]!= '\r')
+        {
+            if(user[p]!='\b')
+            {
+                printf("%c",user[p]);
+                p++;
+            }
+            else
+            {
+                if(p>0)
+                {
+                    printf("\b \b");
+                    p--;
+                }
+            }
+        }
+    }
+    while(p<22 && user[p]!='\r');
+    user[p]='\0';
+}
+void contrasena(char cont[20])                                  //ASTERISCOS
+{
+    int p=0;
+    do
+    {
+        if(p==20)
+        {
+            do
+            {
+                fflush(stdin);
+                cont[p]=getch();
+            }
+            while(cont[p]!='\b' && cont[p]!='\r');
+        }
+        else
+        {
+            fflush(stdin);
+            cont[p]=getch();
+        }
         if(cont[p]!= '\r')
         {
             if(cont[p]!='\b')
@@ -1576,7 +1714,7 @@ void contrasena(char cont[30])                                  //ASTERISCOS
             }
         }
     }
-    while(cont[p]!='\r');
+    while(p<22 && cont[p]!='\r');
     cont[p]='\0';
 }
 stToken generadorToken(stToken transaccion)                     //TOKEN
