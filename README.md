@@ -31,7 +31,7 @@ Asteriscos - Generación y acreditación de token - Pantallas
 
 ## Vista de la aplicación
 ### Inicio
-![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Inicio.png)
+![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Inicio.png)
 ### Inicio de sesión
 ![Image text](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Screenshots/Inicio%20de%20sesi%C3%B3n.png)
 ### Estado de cuenta
@@ -90,9 +90,9 @@ typedef struct  //STRUCT TOKEN
 ## Referencia de colores
 | Color  |  Imagen | Hex |
 | - | - | - |
-| Azul | ![#0037da](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Azul.png) | #0037da |
-| Blanco | ![#f2f2f2](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Blanco.png) | #f2f2f2 |
-| Gris | ![#767676](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Gris.png) | #767676 |
-| Azul claro | ![#3b78ff](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Azul%20Claro.png) | #3b78ff |
-| Rojo | ![#c50f1f](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Rojo.png) | #c50f1f |
-| Verde | ![#13a10e](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Verde.png) | #13a10e |
+| Azul | ![#0037da](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Colores/Azul.png) | #0037da |
+| Blanco | ![#f2f2f2](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Colores/Blanco.png) | #f2f2f2 |
+| Gris | ![#767676](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Colores/Gris.png) | #767676 |
+| Azul claro | ![#3b78ff](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Colores/Azul%20Claro.png) | #3b78ff |
+| Rojo | ![#c50f1f](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Colores/Rojo.png) | #c50f1f |
+| Verde | ![#13a10e](https://github.com/agustinrojass/Prueba-Proyecto/blob/ar/Colores/Verde.png) | #13a10e |
